@@ -1,4 +1,8 @@
+package Objetos;
 import java.time.LocalDate;
+
+import Interfaces.Registro;
+
 import java.io.IOException;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

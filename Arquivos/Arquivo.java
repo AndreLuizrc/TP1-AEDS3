@@ -1,7 +1,10 @@
+package Arquivos;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
+
+import Interfaces.Registro;
 
 public class Arquivo<T extends Registro> {
     final int TAM_CABECALHO = 4;

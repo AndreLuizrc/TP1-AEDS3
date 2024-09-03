@@ -1,6 +1,9 @@
 import java.io.File;
 import java.time.LocalDate;
 
+import Arquivos.Arquivo;
+import Objetos.Cliente;
+
 public class IO {
 
 public static void main(String[] args) {
