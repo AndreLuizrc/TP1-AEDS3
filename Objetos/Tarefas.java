@@ -7,7 +7,7 @@ import java.io.*;
 import java.time.LocalDate;
 
 public class Tarefas implements Registro{
-    private final int id;
+    private int id;
     private String nome;
     private LocalDate createdAt;
     private LocalDate doneAt;
@@ -21,6 +21,33 @@ public class Tarefas implements Registro{
         this.status = Status.PENDENTE;
     }
 
+    public Tarefas() {
+        this.id = 0;
+        this.nome = "";
+        this.createdAt = LocalDate.now();
+        this.doneAt = null;
+        this.status = Status.PENDENTE;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setDoneAt(LocalDate doneAt) {
+        this.doneAt = doneAt;
+    }
+    public LocalDate getDoneAt() {
+        return doneAt;
+    }
+
+    @Override
+    public void setId(int i) {
+        this.id = i;
+    }
+
     @Override
     public int getId() {
         return this.id;
@@ -29,22 +56,40 @@ public class Tarefas implements Registro{
     @Override
     public byte[] toByteArray() throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(this);
-        oos.flush();
+        DataOutputStream dos = new DataOutputStream(baos);
+        dos.writeInt(this.id);
+        dos.writeUTF(this.nome);
+        dos.writeInt((int) this.createdAt.toEpochDay());
+
+        // Tratar o caso de doneAt ser null
+        if (this.doneAt != null) {
+            dos.writeBoolean(true);
+            dos.writeInt((int) this.doneAt.toEpochDay());
+        } else {
+            dos.writeBoolean(false);
+        }
+
+        dos.writeUTF(this.status.toString());
         return baos.toByteArray();
     }
 
     @Override
     public void fromByteArray(byte[] b) throws Exception {
         ByteArrayInputStream bais = new ByteArrayInputStream(b);
-        ObjectInputStream ois = new ObjectInputStream(bais);
-        Tarefas tarefa = (Tarefas) ois.readObject();
+        DataInputStream dis = new DataInputStream(bais);
 
-        this.nome = tarefa.nome;
-        this.createdAt = tarefa.createdAt;
-        this.doneAt = tarefa.doneAt;
-        this.status = tarefa.status;
+        this.id = dis.readInt();
+        this.nome = dis.readUTF();
+        this.createdAt = LocalDate.ofEpochDay(dis.readInt());
+
+        boolean hasDoneAt = dis.readBoolean();
+        if (hasDoneAt) {
+            this.doneAt = LocalDate.ofEpochDay(dis.readInt());
+        } else {
+            this.doneAt = null;
+        }
+
+        this.status = Status.valueOf(dis.readUTF());
     }
 
     @Override
