@@ -22,6 +22,14 @@ public class ParEnderecoId implements RegistroHashExtensivel<ParEnderecoId> {
         this.endereco = end;
     }
 
+    public long getEndereco(){
+        return endereco;
+    }
+
+    public int getId(){
+        return id;
+    }
+
     @Override
     public int hashCode() {
         return id;
