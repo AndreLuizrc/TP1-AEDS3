@@ -114,7 +114,6 @@ public class Arquivo<T extends Registro> {
         short tam;
         byte[] b;
         byte lapide;
-        Long endereco;
 
         ParEnderecoId pid = indiceDireto.read(novoObj.getId());
         
@@ -144,6 +143,7 @@ public class Arquivo<T extends Registro> {
                         arquivo.seek(pid.getEndereco());
                         arquivo.write('*');
                         arquivo.seek(arquivo.length());
+                        indiceDireto.update(new ParEnderecoId(novoObj.getId(),arquivo.getFilePointer()));
                         arquivo.writeByte(' ');
                         arquivo.writeShort(tam2);
                         arquivo.write(b2);
