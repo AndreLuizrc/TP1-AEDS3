@@ -2,53 +2,54 @@ import java.io.File;
 import java.time.LocalDate;
 
 import Arquivos.Arquivo;
-import Objetos.Cliente;
+import Objetos.Tarefas;
+import Utils.Status;
 
 public class IO {
 
-public static void main(String[] args) {
-    Arquivo<Cliente> arqClientes;
-    Cliente c1 = new Cliente("José Alves", "12345678901", 3245.21F, LocalDate.of(1998, 4, 21));
-    Cliente c2 = new Cliente("Ana Rodrigues", "09876543210", 4267.98F, LocalDate.of(2003, 8, 15));
-    Cliente c3 = new Cliente("Carlos Mourão", "56439593721", 2854.23F, LocalDate.of(2001, 1, 7));
+    public static void main(String[] args) {
+        Arquivo<Tarefas> arqTarefas;
+        Tarefas t1 = new Tarefas(1, "Comprar mantimentos", LocalDate.of(2023, 9, 1));
+        Tarefas t2 = new Tarefas(2, "Estudar para o exame", LocalDate.of(2023, 8, 25));
+        Tarefas t3 = new Tarefas(3, "Finalizar o projeto", LocalDate.of(2023, 9, 3));
 
-try {
+        try {
+            File f = new File(".\\dados\\tarefas.db");
+            f.delete();
 
-    // apaga o arquivo atual
-    File f = new File(".\\dados\\clientes.db");
-    f.delete();
+            arqTarefas = new Arquivo<>("tarefas.db", Tarefas.class.getConstructor());
 
-    arqClientes = new Arquivo<>("clientes.db", Cliente.class.getConstructor());
-    arqClientes.create(c1);
-    arqClientes.create(c2);
-    arqClientes.create(c3);
+            arqTarefas.create(t1);
+            arqTarefas.create(t2);
+            arqTarefas.create(t3);
 
-    Cliente c = arqClientes.read(3);
-    if(c!=null)
-        System.out.println(c);
-    else  
-        System.out.println("\nCliente não encontrado!");
+            Tarefas t = arqTarefas.read(3);
+            if (t != null)
+                System.out.println(t);
+            else
+                System.out.println("\nTarefa não encontrada!");
 
-    c = arqClientes.read(1);
-    if(c!=null)
-        System.out.println(c);
-    else  
-        System.out.println("\nCliente não encontrado!");
+            t = arqTarefas.read(1);
+            if (t != null)
+                System.out.println(t);
+            else
+                System.out.println("\nTarefa não encontrada!");
 
-    c2.nome = "Mariana Rodrigues";
-    arqClientes.update(c2);
-    c = arqClientes.read(2);
-    if(c!=null)
-        System.out.println(c);
-    else  
-        System.out.println("\nCliente não encontrado!");
+            t2.setId(2);
+            t2.setStatus(Status.CONCLUIDO);
+            t2.setDoneAt(LocalDate.now());
+            arqTarefas.update(t2);
 
-    arqClientes.close();
+            t = arqTarefas.read(2);
+            if (t != null)
+                System.out.println(t);
+            else
+                System.out.println("\nTarefa não encontrada!");
 
-} catch(Exception e) {
-    e.printStackTrace();
-}
+            arqTarefas.close();
 
-}
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

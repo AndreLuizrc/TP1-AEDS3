@@ -5,12 +5,14 @@ import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
 import Interfaces.Registro;
+import Objetos.ParEnderecoId;
 
 public class Arquivo<T extends Registro> {
     final int TAM_CABECALHO = 4;
     RandomAccessFile arquivo;
     String nomeArquivo;
     Constructor<T> construtor;
+    HashExtensivel<ParEnderecoId> pie;
 
     public Arquivo(String na, Constructor<T> c) throws IOException {
         File d = new File(".\\dados");
@@ -26,7 +28,7 @@ public class Arquivo<T extends Registro> {
         }
     }
 
-    public int create(T obj) throws IOException {
+    public int create(T obj) throws Exception {
         arquivo.seek(0);
         int proximoID = arquivo.readInt()+1;
         arquivo.seek(0);
