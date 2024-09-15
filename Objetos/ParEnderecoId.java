@@ -45,4 +45,10 @@ public class ParEnderecoId implements RegistroHashExtensivel<ParEnderecoId> {
         this.id = dis.readInt();
         this.endereco = dis.readLong();
     }
+
+    public int getId() { return this.id; }
+
+    public long getEndereco() { return this.endereco; }
+
+    public void setEndereco(long endereco) { this.endereco = endereco; }
 }
