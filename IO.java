@@ -13,7 +13,6 @@ public class IO {
         Tarefas t3 = new Tarefas(3, "Finalizar o projeto", LocalDate.of(2023, 9, 3));
 
         try {
-            ".\\dados"
             // Deleta os arquivos de dados e hash para iniciar com um ambiente limpo
             new File(".\\dados\\tarefas.db").delete();
             new File(".\\dados\\diretorio.hash.db").delete();
