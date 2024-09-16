@@ -1,6 +1,5 @@
 package Arquivos;
 import java.io.File;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.lang.reflect.Constructor;
 
@@ -19,7 +18,7 @@ public class Arquivo<T extends Registro> {
         if(!d.exists())
             d.mkdir();
 
-        this.nomeArquivo = ".\\dados\\"+na;
+        this.nomeArquivo = ".\\dados\\"+na+".db";
         this.construtor = c;
         arquivo = new RandomAccessFile(this.nomeArquivo, "rw");
         if(arquivo.length()<TAM_CABECALHO) {
@@ -30,9 +29,10 @@ public class Arquivo<T extends Registro> {
         //Inicialização tabela Hash 
         indiceDireto = new HashExtensivel<>(
             ParEnderecoId.class.getConstructor(), 
-            TAM_CABECALHO, 
+            4, 
             ".\\dados\\"+na+".hash_d.db",
-            ".\\dados\\"+na+"hash_c.db");
+            ".\\dados\\"+na+"hash_c.db"
+        );
     }
 
     public int create(T obj) throws Exception {
@@ -49,7 +49,8 @@ public class Arquivo<T extends Registro> {
         arquivo.writeShort(b.length);
         arquivo.write(b);
         
-        indiceDireto.create(new ParEnderecoId(proximoID,endereco));
+        boolean response = indiceDireto.create(new ParEnderecoId(proximoID,endereco));
+        System.out.println(response);
 
         return obj.getId();
     }
@@ -62,14 +63,14 @@ public class Arquivo<T extends Registro> {
         
         ParEnderecoId pid = indiceDireto.read(id);
         if(pid != null){
+            System.out.println(pid.getId());
             arquivo.seek(pid.getEndereco());
             obj = construtor.newInstance();
             lapide = arquivo.readByte();
-            tam = arquivo.readShort();
-            b = new byte[tam];
-            arquivo.read(b);
-
             if(lapide==' ') {
+                tam = arquivo.readShort();
+                b = new byte[tam];
+                arquivo.read(b);
                 obj.fromByteArray(b);
                 if(obj.getId()==id)
                     return obj;
@@ -121,11 +122,10 @@ public class Arquivo<T extends Registro> {
             arquivo.seek(pid.getEndereco());
             obj = construtor.newInstance();
             lapide = arquivo.readByte();
-            tam = arquivo.readShort();
-            b = new byte[tam];
-            arquivo.read(b);
-
             if(lapide==' ') {
+                tam = arquivo.readShort();
+                b = new byte[tam];
+                arquivo.read(b);
                 obj.fromByteArray(b);
                 if(obj.getId()==novoObj.getId()) {
 
@@ -157,8 +157,9 @@ public class Arquivo<T extends Registro> {
 
     
 
-    public void close() throws IOException {
+    public void close() throws Exception {
         arquivo.close();
+        indiceDireto.close();
     }
 
 

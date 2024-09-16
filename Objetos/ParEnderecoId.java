@@ -23,16 +23,16 @@ public class ParEnderecoId implements RegistroHashExtensivel<ParEnderecoId> {
     }
 
     public long getEndereco(){
-        return endereco;
+        return this.endereco;
     }
 
     public int getId(){
-        return id;
+        return this.id;
     }
 
     @Override
     public int hashCode() {
-        return id;
+        return this.id;
     }
 
     public short size(){
@@ -42,8 +42,8 @@ public class ParEnderecoId implements RegistroHashExtensivel<ParEnderecoId> {
     public byte[] toByteArray() throws IOException{
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(bao);
-        dos.writeInt(id);
-        dos.writeFloat(endereco);
+        dos.writeInt(this.id);
+        dos.writeLong(this.endereco);
         return bao.toByteArray();
     }
 

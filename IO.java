@@ -15,21 +15,22 @@ public static void main(String[] args) {
 try {
 
     // apaga o arquivo atual
-    File f = new File(".\\dados\\clientes.db");
-    f.delete();
+    (new File(".\\dados\\clientes.db")).delete();
+    (new File(".\\dados\\clientes.hash_d.db")).delete();
+    (new File(".\\dados\\clientes.hash_c.db")).delete();
 
-    arqClientes = new Arquivo<>("clientes.db", Cliente.class.getConstructor());
+    arqClientes = new Arquivo<>("clientes", Cliente.class.getConstructor());
     arqClientes.create(c1);
     arqClientes.create(c2);
     arqClientes.create(c3);
 
-    Cliente c = arqClientes.read(3);
+    Cliente c = arqClientes.read(1);
     if(c!=null)
         System.out.println(c);
     else  
         System.out.println("\nCliente não encontrado!");
 
-    c = arqClientes.read(1);
+    c = arqClientes.read(2);
     if(c!=null)
         System.out.println(c);
     else  
