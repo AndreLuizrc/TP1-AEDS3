@@ -8,13 +8,8 @@ O trabalho está funcionando corretamente? SIM :white_check_mark:
 O trabalho está completo? SIM :white_check_mark:  
 O trabalho é original e não a cópia de um trabalho de outro grupo? SIM :white_check_mark:  
 
-// Descrevam todas as classes criadas e os seus métodos
-
-// Sobre o Trabalho
-
-// Descrever o objetivo do trabalho (GPT)
-
-// Descrevam um pouco o esforço: vocês implementaram todos os requisitos? Houve alguma operação mais difícil? Vocês enfrentaram algum desafio na implementação? Os resultados foram alcançados? ... A ideia, portanto, é relatar como foi a experiência de desenvolvimento do TP. Aqui, a ideia é entender como foi para vocês desenvolver este TP.
+:round_pushpin: Sobre o Trabalho  
+O objetivo do trabalho é implementar um sistema de gerenciamento de Tarefas utilizando uma tabela hash extensível para o índice direto, permitindo operações de inclusão, busca, alteração e exclusão de registros, com armazenamento eficiente em memória secundária por meio de um arquivo binário e tratamento adequado para remoções lógicas e alterações de tamanho.
 
 :round_pushpin: Estruturação Geral  
 -Estrutura de Dados na Classe  
@@ -48,5 +43,10 @@ Registro (Vetor de Bytes): A representação binária do objeto, conforme descri
 
 [Último ID] -> [Lápide 1] -> [Tamanho do Registro 1] -> [Registro 1 em Bytes] -> [Lápide 2] -> [Tamanho do Registro 2] -> [Registro 2 em Bytes] -> ... -> EOF
 
+:round_pushpin: As classes criadas e os seus métodos
+//TEXTO AQUI
+
+:round_pushpin: Opinião do grupo sobre o desenvolvimento:
+// Descrevam um pouco o esforço: vocês implementaram todos os requisitos? Houve alguma operação mais difícil? Vocês enfrentaram algum desafio na implementação? Os resultados foram alcançados? ... A ideia, portanto, é relatar como foi a experiência de desenvolvimento do TP. Aqui, a ideia é entender como foi para vocês desenvolver este TP.
 
 
