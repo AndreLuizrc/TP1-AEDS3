@@ -31,7 +31,7 @@ public class Arquivo<T extends Registro> {
             ParEnderecoId.class.getConstructor(), 
             4, 
             ".\\dados\\"+na+".hash_d.db",
-            ".\\dados\\"+na+"hash_c.db"
+            ".\\dados\\"+na+".hash_c.db"
         );
     }
 
@@ -49,8 +49,8 @@ public class Arquivo<T extends Registro> {
         arquivo.writeShort(b.length);
         arquivo.write(b);
         
-        boolean response = indiceDireto.create(new ParEnderecoId(proximoID,endereco));
-        System.out.println(response);
+        indiceDireto.create(new ParEnderecoId(proximoID,endereco));
+        //System.out.println(response);
 
         return obj.getId();
     }
@@ -63,7 +63,7 @@ public class Arquivo<T extends Registro> {
         
         ParEnderecoId pid = indiceDireto.read(id);
         if(pid != null){
-            System.out.println(pid.getId());
+            //System.out.println(pid.getId());
             arquivo.seek(pid.getEndereco());
             obj = construtor.newInstance();
             lapide = arquivo.readByte();
