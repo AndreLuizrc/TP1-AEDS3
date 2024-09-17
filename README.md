@@ -26,6 +26,7 @@ O objetivo do trabalho é implementar um sistema de gerenciamento de Tarefas uti
 - **Data de Criação (LOCALDATE)**: Data em que a instância foi criada.
 - **Data de Conclusão (LOCALDATE)**: Data em que a instância foi concluída.
 - **Status (TIPO 'STATUS')**: Indicador textual do estado atual da instância (por exemplo, "pendente", "progresso", "concluído").
+- **Prioridade (BYTE)**: Nível de prioridade da instância, representado como um valor numérico.
 
 ## Estrutura do Registro
 
@@ -36,6 +37,7 @@ Cada objeto será representado como um vetor de bytes, preparado para ser armaze
 - **Data de Criação** = (INT)
 - **Data de Conclusão** = (INT)
 - **Status** = (STRING UTF-8)
+- **Prioridade** = (BYTE)
 
 ## Estrutura do Arquivo
 
