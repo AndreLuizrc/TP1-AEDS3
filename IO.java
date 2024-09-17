@@ -10,7 +10,7 @@ public class IO {
         Arquivo<Tarefas> arqTarefas;
         Tarefas t1 = new Tarefas(1, "Comprar mantimentos", LocalDate.of(2023, 9, 1));
         Tarefas t2 = new Tarefas(2, "Estudar para o exame", LocalDate.of(2023, 8, 25));
-        Tarefas t3 = new Tarefas(3, "Finalizar o projeto", LocalDate.of(2023, 9, 3));
+        Tarefas t3 = new Tarefas(3, "Estudar para a prova de Aeds 3", LocalDate.of(2023, 9, 3));
 
         try {
             // Deleta os arquivos de dados e hash para iniciar com um ambiente limpo
@@ -29,7 +29,7 @@ public class IO {
             // Testa a leitura da tarefa 1
             Tarefas t = arqTarefas.read(1);
             if (t != null) {
-                System.out.println("Tarefa encontrada: " + t);
+                System.out.println("Tarefa encontrada: " + t + "\n");
             } else {
                 System.out.println("\nTarefa não encontrada!");
             }
@@ -37,25 +37,27 @@ public class IO {
             // Testa a leitura da tarefa 3
             t = arqTarefas.read(3);
             if (t != null) {
-                System.out.println("Tarefa encontrada: " + t);
+                System.out.println("Tarefa encontrada: " + t + "\n");
             } else {
                 System.out.println("\nTarefa não encontrada!");
             }
 
-            // Atualiza a tarefa 2 para concluída
-            t2.setStatus(Status.CONCLUIDO);
-            t2.setDoneAt(LocalDate.now());
-            arqTarefas.update(t2);
+            //sempre setar a data de conclusão quando alterar o status da tarefa para concluído
+            t3.setStatus(Status.CONCLUIDO);
+            t3.setDoneAt(LocalDate.of(2023, 9, 5));
+            
 
-            // Testa a leitura da tarefa 2 atualizada
-            t = arqTarefas.read(2);
+            arqTarefas.update(t3);
+
+            t = arqTarefas.read(3);
             if (t != null) {
-                System.out.println("Tarefa atualizada: " + t);
+                System.out.println("Tarefa encontrada: " + t + "\n");
             } else {
                 System.out.println("\nTarefa não encontrada!");
             }
 
-            // Fecha o arquivo de tarefas
+
+
             arqTarefas.close();
 
         } catch (Exception e) {

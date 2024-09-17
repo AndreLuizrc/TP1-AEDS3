@@ -95,7 +95,7 @@ public class Tarefas implements Registro{
     @Override
     public String toString() {
         return  "\nID........: " + this.id +
-                "\nNome......: " + this.nome +
+                "\nName......: " + this.nome +
                 "\nCreated At: " + this.createdAt.toString() +
                 "\nStatus....: " + this.status +
                 (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "");
