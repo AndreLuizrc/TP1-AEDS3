@@ -9,7 +9,7 @@ O trabalho está completo? SIM :white_check_mark:
 O trabalho é original e não a cópia de um trabalho de outro grupo? SIM :white_check_mark:  
 
 :round_pushpin: Sobre o Trabalho  
-O objetivo do trabalho é implementar um sistema de gerenciamento de Tarefas utilizando uma tabela hash extensível para o índice direto, permitindo operações de inclusão, busca, alteração e exclusão de registros, com armazenamento eficiente em memória secundária por meio de um arquivo binário e tratamento adequado para remoções lógicas e alterações de tamanho.
+O objetivo do trabalho é implementar um sistema de gerenciamento de Tarefas utilizando uma tabela hash extensível para o índice direto, permitindo operações de inclusão, busca, alteração e exclusão de registros, com armazenamento eficiente em memória secundária por meio de um arquivo em bytes e tratamento adequado para remoções lógicas e alterações de tamanho.
 
 :round_pushpin: Estruturação Geral  
 -Estrutura de Dados na Classe  
@@ -43,10 +43,49 @@ Registro (Vetor de Bytes): A representação binária do objeto, conforme descri
 
 [Último ID] -> [Lápide 1] -> [Tamanho do Registro 1] -> [Registro 1 em Bytes] -> [Lápide 2] -> [Tamanho do Registro 2] -> [Registro 2 em Bytes] -> ... -> EOF
 
-:round_pushpin: As classes criadas e os seus métodos
-//TEXTO AQUI
+:round_pushpin: Classes criadas e os seus métodos:  
+---------------------------------------------------------------------------------------------
+Classe Arquivo  
+A classe Arquivo<T> gerencia registros genéricos que implementam a interface Registro, realizando operações de CRUD (criar, ler, atualizar e deletar) em um arquivo de bytes. Ela utiliza a tabela hash extensível (HashExtensivel<ParEnderecoId>) para armazenar índices diretos.
+Construtor:  
+Arquivo(String na, Constructor<T> c): Inicializa o arquivo de dados e o índice hash extensível. Se o arquivo não existir, cria o arquivo e o cabeçalho.  
+Métodos:  
+int create(T obj): Cria um novo registro no arquivo, atribui um novo ID, armazena o registro no final do arquivo, e insere a referência no índice hash.  
+T read(int id): Lê um registro a partir de seu ID, utilizando o índice hash para localizar o endereço no arquivo.  
+boolean delete(int id): Marca um registro como excluído (usando uma lápide) e remove sua entrada do índice hash.  
+boolean update(T novoObj): Atualiza um registro existente. Se o novo registro for maior que o anterior, move-o para o final do arquivo e ajusta o índice hash.  
+void close(): Fecha o arquivo de dados e o índice hash associado.  
+---------------------------------------------------------------------------------------------
+Classe Tarefas  
+A classe Tarefas implementa a interface Registro e representa uma tarefa com informações como o nome, a data de criação, a data de conclusão (se houver), e seu status (usando o enum Status).  
+Construtores:  
+Tarefas(int id, String nome, LocalDate createdAt):  
+Inicializa uma tarefa com um ID, nome e data de criação definidos. O status inicial é PENDENTE e a data de conclusão (doneAt) é null.  
+Tarefas():  
+Inicializa uma tarefa com valores padrão: ID 0, nome vazio, a data de criação como a data atual, status PENDENTE, e doneAt como null.  
+Métodos:  
+void setStatus(Status status):  
+Define o status da tarefa. O status é um valor do enum Status, que pode ser PENDENTE, PROGRESSO ou CONCLUIDO.  
+void setDoneAt(LocalDate doneAt):  
+Define a data de conclusão (doneAt) da tarefa. Usado apenas quando a tarefa é marcada como CONCLUIDO.  
+Serialização e Deserialização:  
+byte[] toByteArray():  
+Converte o objeto Tarefas em um array de bytes para armazenamento. Isso inclui o ID, nome, data de criação (em dias desde o epoch), status, e, se disponível, a data de conclusão (doneAt). Se a data de conclusão for null, o método grava um valor booleano false para indicar que doneAt não existe.  
+void fromByteArray(byte[] b):  
+Reconstrói o objeto Tarefas a partir de um array de bytes. Lê os dados armazenados, incluindo o ID, nome, data de criação, status, e, se aplicável, a data de conclusão.  
 
-:round_pushpin: Opinião do grupo sobre o desenvolvimento:
+Relacionamento com Status  
+A enumeração Status define três possíveis estados para uma tarefa:  
+
+PENDENTE: A tarefa ainda não foi iniciada.  
+PROGRESSO: A tarefa está em andamento.  
+CONCLUIDO: A tarefa foi finalizada. Quando uma tarefa é marcada como CONCLUIDO, a data de conclusão (doneAt) pode ser definida.  
+Esses valores são usados pela classe Tarefas para indicar em qual fase a tarefa se encontra e impactam a maneira como a tarefa é exibida ou manipulada.  
+
+OBS: TODAS AS OUTRAS BLA BLA BLA
+---------------------------------------------------------------------------------------------
+
+:round_pushpin: Opinião do grupo sobre o desenvolvimento:  
 // Descrevam um pouco o esforço: vocês implementaram todos os requisitos? Houve alguma operação mais difícil? Vocês enfrentaram algum desafio na implementação? Os resultados foram alcançados? ... A ideia, portanto, é relatar como foi a experiência de desenvolvimento do TP. Aqui, a ideia é entender como foi para vocês desenvolver este TP.
 
 
