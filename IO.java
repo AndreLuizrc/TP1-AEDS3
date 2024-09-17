@@ -45,6 +45,8 @@ public class IO {
             //sempre setar a data de conclusão quando alterar o status da tarefa para concluído
             t3.setStatus(Status.CONCLUIDO);
             t3.setDoneAt(LocalDate.of(2023, 9, 5));
+
+            t3.setPriority((byte) 3);
             
 
             arqTarefas.update(t3);

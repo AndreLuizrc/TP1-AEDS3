@@ -12,6 +12,7 @@ public class Tarefas implements Registro{
     private LocalDate createdAt;
     private LocalDate doneAt;
     private Status status;
+    private byte priority;
 
     public Tarefas(int id, String nome, LocalDate createdAt) {
         this.id = id;
@@ -19,6 +20,7 @@ public class Tarefas implements Registro{
         this.createdAt = createdAt;
         this.doneAt = null;
         this.status = Status.PENDENTE;
+        this.priority = 1;
     }
 
     public Tarefas() {
@@ -27,6 +29,7 @@ public class Tarefas implements Registro{
         this.createdAt = LocalDate.now();
         this.doneAt = null;
         this.status = Status.PENDENTE;
+        this.priority = 1;
     }
 
     public void setStatus(Status status) {
@@ -40,7 +43,31 @@ public class Tarefas implements Registro{
         this.doneAt = doneAt;
     }
     public LocalDate getDoneAt() {
-        return doneAt;
+        return this.doneAt;
+    }
+
+    public byte getPriority(){
+        return this.priority;
+    }
+
+    public void setPriority(byte priority){
+        this.priority = priority;
+    }
+
+    public String getPriorityType(byte priority){
+        switch (priority) {
+            case 1:
+                return "ALTA";
+
+            case 2:
+                return "MEDIA";
+
+            case 3:
+                return "BAIXA";
+        
+            default:
+                return "";
+        }
     }
 
     @Override
@@ -70,6 +97,8 @@ public class Tarefas implements Registro{
         }
 
         dos.writeUTF(this.status.toString());
+        dos.write(this.priority);
+
         return baos.toByteArray();
     }
 
@@ -90,6 +119,7 @@ public class Tarefas implements Registro{
         }
 
         this.status = Status.valueOf(dis.readUTF());
+        this.priority = (byte) dis.read();
     }
 
     @Override
@@ -98,6 +128,7 @@ public class Tarefas implements Registro{
                 "\nName......: " + this.nome +
                 "\nCreated At: " + this.createdAt.toString() +
                 "\nStatus....: " + this.status +
-                (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "");
+                (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +
+                "\nPriority..: " + getPriorityType(this.priority);
     }
 }
