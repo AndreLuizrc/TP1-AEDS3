@@ -25,8 +25,7 @@ O objetivo do trabalho é implementar um sistema de gerenciamento de Tarefas uti
 - **Nome (STRING)**: Nome descritivo associado à instância.
 - **Data de Criação (LOCALDATE)**: Data em que a instância foi criada.
 - **Data de Conclusão (LOCALDATE)**: Data em que a instância foi concluída.
-- **Status (STRING)**: Indicador textual do estado atual da instância (por exemplo, "ativo", "concluído", "pendente").
-- **Prioridade (BYTE)**: Nível de prioridade da instância, representado como um valor numérico.
+- **Status (TIPO 'STATUS')**: Indicador textual do estado atual da instância (por exemplo, "pendente", "progresso", "concluído").
 
 ## Estrutura do Registro
 
@@ -37,7 +36,6 @@ Cada objeto será representado como um vetor de bytes, preparado para ser armaze
 - **Data de Criação** = (INT)
 - **Data de Conclusão** = (INT)
 - **Status** = (STRING UTF-8)
-- **Prioridade** = (BYTE)
 
 ## Estrutura do Arquivo
 
@@ -112,8 +110,8 @@ Esses valores são usados pela classe `Tarefas` para indicar em qual fase a tare
 # :pushpin:Opinião do Grupo sobre o Desenvolvimento
 
 Dividimos as tarefas deste trabalho de forma democrática entre os quatro integrantes e planejamos alternar as funções em cada trabalho futuro.  
-Desenvolvimento do programa, organização e implementação da Hashtable - João, André  
-Arquitetura do projeto, Testes, Documentação - Victor, Douglas  
+:white_check_mark:Desenvolvimento do programa, Organização e Implementação da Hashtable - João, André  
+:white_check_mark:Arquitetura do projeto, Testes e Documentação - Victor, Douglas  
 
 A parte mais desafiadora foi entender o código da tabela hash extensível; embora não fosse necessário compreender todos os detalhes, precisávamos ler o código para adiantar implementação.  
 Durante uma das fases de teste, identificamos um problema na classe `Arquivo`, onde os métodos da hashtable não estavam sendo acionados corretamente, mas já corrigimos essa questão.  
