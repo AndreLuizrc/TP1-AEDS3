@@ -1,4 +1,4 @@
-# Checklist Obrigatório
+#  :pushpin:Checklist Obrigatório
 
 - O trabalho possui um índice direto implementado com a tabela hash extensível? **SIM** :white_check_mark:
 - A operação de inclusão insere um novo registro no fim do arquivo e no índice e retorna o ID desse registro? **SIM** :white_check_mark:
@@ -11,13 +11,13 @@
 
 ---
 
-# Sobre o Trabalho
+# :pushpin:Sobre o Trabalho
 
 O objetivo do trabalho é implementar um sistema de gerenciamento de Tarefas utilizando uma tabela hash extensível para o índice direto, permitindo operações de inclusão, busca, alteração e exclusão de registros, com armazenamento eficiente em memória secundária por meio de um arquivo em bytes e tratamento adequado para remoções lógicas e alterações de tamanho.
 
 ---
 
-# Estruturação Geral
+# :pushpin:Estruturação Geral
 
 ## Estrutura de Dados na Classe
 
@@ -56,7 +56,7 @@ O arquivo de armazenamento conterá um cabeçalho e uma sequência de registros.
 
 ---
 
-# Classes Criadas e seus Métodos
+# :pushpin:Classes Criadas e seus Métodos
 
 ## Classe Arquivo
 
@@ -105,11 +105,11 @@ A enumeração `Status` define três possíveis estados para uma tarefa:
 
 Esses valores são usados pela classe `Tarefas` para indicar em qual fase a tarefa se encontra e impactam a maneira como a tarefa é exibida ou manipulada.
 
-**OBS**: TODAS AS OUTRAS BLA BLA BLA
+**OBS**: Os métodos e classes que não foram abordados aqui são autoexplicativos ou seguem o mesmo padrão apresentado em sala de aula, o que acreditamos tornar redundantes suas explicações.
 
 ---
 
-# Opinião do Grupo sobre o Desenvolvimento
+# :pushpin:Opinião do Grupo sobre o Desenvolvimento
 
 Dividimos as tarefas deste trabalho de forma democrática entre os quatro integrantes e planejamos alternar as funções em cada trabalho futuro.  
 Desenvolvimento do programa, organização e implementação da Hashtable - João, André  
