@@ -1,10 +1,4 @@
-import java.io.File;
-import java.time.LocalDate;
-//import Arquivos.Arquivo;
-import Arquivos.ArquivoCategoria;
-import Objetos.Tarefas;
 import Utils.MenuCategorias;
-import Utils.Status;
 import java.util.Scanner;
 
 public class IO {

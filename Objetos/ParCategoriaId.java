@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import Interfaces.RegistroHashExtensivel;
 
 public class ParCategoriaId implements RegistroHashExtensivel<ParCategoriaId> {
