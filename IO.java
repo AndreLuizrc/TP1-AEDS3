@@ -17,7 +17,7 @@ public class IO {
             new File(".\\dados\\tarefas.db").delete();
             new File(".\\dados\\tarefas.hash_d.db").delete();
             new File(".\\dados\\tarefas.hash_c.db").delete();
-
+            
             // Inicializa o arquivo utilizando a classe Tarefas
             arqTarefas = new Arquivo<>("tarefas", Tarefas.class.getConstructor());
 
