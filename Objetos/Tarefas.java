@@ -1,8 +1,5 @@
 package Objetos;
-<<<<<<< HEAD
 //envio
-=======
->>>>>>> 6992a5d52fed3517fee8c178402da0796f5f69af
 
 import Interfaces.Registro;
 import Utils.Status;
