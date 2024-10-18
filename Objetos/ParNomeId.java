@@ -7,27 +7,23 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import Interfaces.RegistroHashExtensivel;
 
-public class ParCategoriaId implements RegistroHashExtensivel<ParCategoriaId> {
-    private String cpf; // chave
+public class ParNomeId implements RegistroHashExtensivel<ParNomeId> {
+    private String nome; // chave
     private int id;     // valor
     private final short TAMANHO = 15;  // tamanho em bytes
 
-    public ParCategoriaId() {
-        this.cpf = "00000000000";
+    public ParNomeId() {
+        this.nome = "00000000000";
         this.id = -1;
     }
 
-    public ParCategoriaId(String cpf, int id) throws Exception {
-        // Certifique-se de que o CPF contém exatamente 11 dígitos
-        if (cpf.length() != 11 || !cpf.matches("\\d{11}")) {
-            throw new IllegalArgumentException("CPF deve conter exatamente 11 dígitos numéricos.");
-        }
-        this.cpf = cpf;
+    public ParNomeId(String nome, int id) throws Exception {
+        this.nome = nome;
         this.id = id;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getNome() {
+        return nome;
     }
 
     public int getId() {
@@ -37,7 +33,7 @@ public class ParCategoriaId implements RegistroHashExtensivel<ParCategoriaId> {
  
     @Override
     public int hashCode() {
-        return hash(this.cpf);
+        return hash(this.nome);
     }
 
     public short size() {
@@ -45,13 +41,13 @@ public class ParCategoriaId implements RegistroHashExtensivel<ParCategoriaId> {
     }
 
     public String toString() {
-        return "("+this.cpf + ";" + this.id+")";
+        return "("+this.nome + ";" + this.id+")";
     }
 
     public byte[] toByteArray() throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(baos);
-        dos.write(this.cpf.getBytes());
+        dos.write(this.nome.getBytes());
         dos.writeInt(this.id);
         return baos.toByteArray();
     }
@@ -61,21 +57,17 @@ public class ParCategoriaId implements RegistroHashExtensivel<ParCategoriaId> {
         DataInputStream dis = new DataInputStream(bais);
         byte[] b = new byte[11];
         dis.read(b);
-        this.cpf = new String(b);
+        this.nome = new String(b);
         this.id = dis.readInt();
     }
 
-    public static int hash(String cpf) throws IllegalArgumentException {
-        // Certifique-se de que o CPF contém exatamente 11 dígitos
-        if (cpf.length() != 11 || !cpf.matches("\\d{11}")) {
-            throw new IllegalArgumentException("CPF deve conter exatamente 11 dígitos numéricos.");
-        }
+    public static int hash(String nome) throws IllegalArgumentException {
 
-        // Converter o CPF para um número inteiro longo
-        long cpfLong = Long.parseLong(cpf);
+        // Converter o nome para um número inteiro longo
+        long nomeLong = Long.parseLong(nome);
 
         // Aplicar uma função de hash usando um número primo grande
-        int hashValue = (int) (cpfLong % (int)(1e9 + 7));
+        int hashValue = (int) (nomeLong % (int)(1e9 + 7));
 
         // Retornar um valor positivo
         return Math.abs(hashValue);

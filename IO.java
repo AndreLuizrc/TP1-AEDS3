@@ -18,7 +18,7 @@ public class IO {
                 System.out.println("2 - Clientes");
                 System.out.println("0 - Sair");
 
-                System.out.print("Opção: ");
+                System.out.print("Opcao: ");
                 try {
                     opcao = Integer.valueOf(console.nextLine());
                 } catch (NumberFormatException e) {

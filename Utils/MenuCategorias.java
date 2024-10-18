@@ -58,6 +58,21 @@ public class MenuCategorias {
         } while (opcao != 0);
     }
 
+    public void buscarCategoria(){
+        String nome;
+        boolean dadosCompletos = false;
+
+        do {
+            System.out.print("\nDigite o nome da categoria que deseja buscar: ");
+            nome = console.nextLine();
+            if(nome.length()>=5 || nome.length()==0)
+                dadosCompletos = true;
+            else 
+                System.err.println("O nome da categoria deve ter no mínimo 5 caracteres.");
+        } while(!dadosCompletos);
+
+    }
+
     public void incluirCategoria() {
         String nome;
         boolean dadosCompletos = false;
