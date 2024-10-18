@@ -1,5 +1,4 @@
 package Objetos;
-//enviogit add
 
 import Interfaces.Registro;
 import Utils.Status;
@@ -7,7 +6,7 @@ import Utils.Status;
 import java.io.*;
 import java.time.LocalDate;
 
-public class Tarefas implements Registro{
+public class Tarefas implements Registro {
     private int id;
     private String nome;
     private LocalDate createdAt;
@@ -15,9 +14,18 @@ public class Tarefas implements Registro{
     private Status status;
     private byte priority;
 
+    public Tarefas() {
+        this.id = 0;
+        this.nome = "ABCDEFGHIJKLMNQRST";
+        this.createdAt = LocalDate.now();
+        this.doneAt = null;
+        this.status = Status.PENDENTE;
+        this.priority = 1;
+    }
+
     public Tarefas(int id, String nome, LocalDate createdAt) {
         this.id = id;
-        this.nome = nome;
+        this.nome = preencherNome(nome);
         this.createdAt = LocalDate.now();
         this.doneAt = null;
         this.status = Status.PENDENTE;
@@ -26,25 +34,35 @@ public class Tarefas implements Registro{
 
     public Tarefas(String nome) {
         this.id = 0;
-        this.nome = nome;
+        this.nome = preencherNome(nome);
         this.createdAt = LocalDate.now();
         this.doneAt = null;
         this.status = Status.PENDENTE;
         this.priority = 1;
     }
 
-    public Tarefas() {
-        this.id = 0;
-        this.nome = "";
-        this.createdAt = LocalDate.now();
-        this.doneAt = null;
-        this.status = Status.PENDENTE;
-        this.priority = 1;
+    // Preenche com espaços em branco para que o nome tenha o tamanho fixo correto
+    private String preencherNome(String nome) {
+        if (nome.length() > 20) {
+            throw new IllegalArgumentException("O nome excede o tamanho máximo permitido.");
+        }
+        char[] filler = new char[20];
+        for (int i = 0; i < nome.length(); i++) {
+            filler[i] = nome.charAt(i);
+        }
+        for (int i = nome.length(); i < filler.length; i++) {
+            filler[i] = 'a';
+        }
+        String tmp = new String(filler);
+        this.nome = tmp;
+
+        return this.nome;
     }
 
     public void setStatus(Status status) {
         this.status = status;
     }
+
     public Status getStatus() {
         return status;
     }
@@ -52,19 +70,20 @@ public class Tarefas implements Registro{
     public void setDoneAt(LocalDate doneAt) {
         this.doneAt = doneAt;
     }
+
     public LocalDate getDoneAt() {
         return this.doneAt;
     }
 
-    public byte getPriority(){
+    public byte getPriority() {
         return this.priority;
     }
 
-    public void setPriority(byte priority){
+    public void setPriority(byte priority) {
         this.priority = priority;
     }
 
-    public String getPriorityType(byte priority){
+    public String getPriorityType(byte priority) {
         switch (priority) {
             case 1:
                 return "ALTA";
@@ -74,17 +93,17 @@ public class Tarefas implements Registro{
 
             case 3:
                 return "BAIXA";
-        
+
             default:
                 return "";
         }
     }
 
-    public void setNome(String nome){
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public String getNome(){
+    public String getNome() {
         return this.nome;
     }
 
@@ -142,8 +161,18 @@ public class Tarefas implements Registro{
 
     @Override
     public String toString() {
-        return  "\nID........: " + this.id +
-                "\nName......: " + this.nome +
+        char[] tmp = new char[20];
+        int j = 0;
+        for (int i = 0; i < 20; i++) {
+            if (nome.charAt(i) != '|') {
+                tmp[j] = nome.charAt(i);
+                j++;
+            }
+        }
+        // FAZER TRATAMENTO DE ACENTOS
+        String fixed = new String(tmp);
+        return "\nID........: " + this.id +
+                "\nName......: " + fixed +
                 "\nCreated At: " + this.createdAt.toString() +
                 "\nStatus....: " + this.status +
                 (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +
