@@ -79,6 +79,14 @@ public class Tarefas implements Registro{
         }
     }
 
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public String getNome(){
+        return this.nome;
+    }
+
     @Override
     public void setId(int i) {
         this.id = i;

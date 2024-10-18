@@ -62,15 +62,18 @@ public class ParNomeId implements RegistroHashExtensivel<ParNomeId> {
     }
 
     public static int hash(String nome) throws IllegalArgumentException {
-
-        // Converter o nome para um número inteiro longo
-        long nomeLong = Long.parseLong(nome);
-
-        // Aplicar uma função de hash usando um número primo grande
-        int hashValue = (int) (nomeLong % (int)(1e9 + 7));
-
-        // Retornar um valor positivo
-        return Math.abs(hashValue);
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode ser nulo ou vazio.");
+        }
+    
+        // Usar o hashCode da própria string e ajustar para evitar valores negativos
+        int hashValue = nome.hashCode();
+    
+        // Usar um número primo grande para modular o valor, se necessário
+        hashValue = Math.abs(hashValue % (int)(1e9 + 7));
+    
+        return hashValue;
     }
+    
     
 }

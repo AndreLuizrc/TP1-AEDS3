@@ -1,20 +1,18 @@
 package Utils;
 
 import java.util.Scanner;
-
 import Arquivos.Arquivo;
 import Arquivos.ArquivoCategoria;
-import Objetos.Categoria;
+import Arquivos.ArquivoTarefa;
 import Objetos.Tarefas;
-import java.time.LocalDate;
 
 public class MenuTarefas{
         
-    Arquivo<Tarefas> arqTarefas;
+    ArquivoTarefa arqTarefas;
     private static Scanner console = new Scanner(System.in);
 
     public MenuTarefas() throws Exception {
-        arqTarefas = new Arquivo<>("tarefas", Tarefas.class.getConstructor());
+        arqTarefas = new ArquivoTarefa();
     }
 
     public void menu() throws Exception{
@@ -40,16 +38,16 @@ public class MenuTarefas{
 
             switch (opcao) {
                 case 1:
-                    // buscarCategoria();
+                    buscarTarefa();
                     break;
                 case 2:
                     incluirTarefa();
                     break;
                 case 3:
-                    // alterarCategoria();
+                    // alterarTarefa();
                     break;
                 case 4:
-                    // excluirCategoria();
+                    // excluirTarefa();
                     break;
                 case 0:
                     break;
@@ -59,6 +57,16 @@ public class MenuTarefas{
             }
 
         } while (opcao != 0);
+    }
+
+    public void buscarTarefa()throws Exception{
+        String nome;
+
+        System.out.println("\nPesquisa de tarefa: ");
+        System.out.println("\nDigite o nome da Tarefa que deseja pesquisar: ");
+        nome = console.nextLine();
+
+        System.out.println(arqTarefas.read(nome));
     }
 
 
@@ -71,7 +79,5 @@ public class MenuTarefas{
 
         Tarefas novaTarefa = new Tarefas(nome);
         arqTarefas.create(novaTarefa);
-
-    
     }
 }   

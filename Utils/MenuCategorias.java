@@ -98,7 +98,6 @@ public class MenuCategorias {
             try {
                 Categoria c = new Categoria(nome);
                 arqCategorias.create(c);
-                arqCategorias.createIndex(c);
                 System.out.println("Categoria criada com sucesso.");
             } catch(Exception e) {
                 System.out.println("Erro do sistema. Não foi possível criar a categoria!");
