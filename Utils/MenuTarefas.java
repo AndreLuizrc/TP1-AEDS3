@@ -1,8 +1,6 @@
 package Utils;
 
 import java.util.Scanner;
-import Arquivos.Arquivo;
-import Arquivos.ArquivoCategoria;
 import Arquivos.ArquivoTarefa;
 import Objetos.Tarefas;
 
