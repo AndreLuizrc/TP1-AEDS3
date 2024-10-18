@@ -1,11 +1,15 @@
 package Arquivos;
 
-import Objetos.Tarefas;
-import java.lang.reflect.Constructor;
+import Objetos.ParCategoriaId;
+import Objetos.Categoria;
+
 //import Objetos.Tarefas;
 
-public class ArquivoCategoria extends Arquivo<Tarefas> {
-    public ArquivoCategoria(String na, Constructor<Tarefas> c) throws Exception {
-        super(na, c);
+public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
+    Arquivo<Categoria> arqCategorias;
+    HashExtensivel<ParCategoriaId> indiceIndiretoCategoria;
+
+    public ArquivoCategoria() throws Exception {
+        super("categorias", Categoria.class.getConstructor());
     }
 }
