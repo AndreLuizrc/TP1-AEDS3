@@ -1,5 +1,5 @@
 package Objetos;
-//enviogit add
+//envio
 
 import Interfaces.Registro;
 import Utils.Status;
