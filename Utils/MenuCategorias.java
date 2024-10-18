@@ -58,7 +58,7 @@ public class MenuCategorias {
         } while (opcao != 0);
     }
 
-    public void buscarCategoria(){
+    public Categoria buscarCategoria(){
         String nome;
         boolean dadosCompletos = false;
 
@@ -70,6 +70,8 @@ public class MenuCategorias {
             else 
                 System.err.println("O nome da categoria deve ter no mínimo 5 caracteres.");
         } while(!dadosCompletos);
+
+        return null;
 
     }
 
@@ -96,6 +98,7 @@ public class MenuCategorias {
             try {
                 Categoria c = new Categoria(nome);
                 arqCategorias.create(c);
+                arqCategorias.createIndex(c);
                 System.out.println("Categoria criada com sucesso.");
             } catch(Exception e) {
                 System.out.println("Erro do sistema. Não foi possível criar a categoria!");

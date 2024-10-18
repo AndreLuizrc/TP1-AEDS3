@@ -17,7 +17,16 @@ public class Tarefas implements Registro{
     public Tarefas(int id, String nome, LocalDate createdAt) {
         this.id = id;
         this.nome = nome;
-        this.createdAt = createdAt;
+        this.createdAt = LocalDate.now();
+        this.doneAt = null;
+        this.status = Status.PENDENTE;
+        this.priority = 1;
+    }
+
+    public Tarefas(String nome) {
+        this.id = 0;
+        this.nome = nome;
+        this.createdAt = LocalDate.now();
         this.doneAt = null;
         this.status = Status.PENDENTE;
         this.priority = 1;
