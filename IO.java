@@ -47,5 +47,5 @@ public class IO {
     }
 }
 
-// cls && javac IO.java && java IO > saida.txt
+// cls && javac IO.java && java IO
 // git clean -f
