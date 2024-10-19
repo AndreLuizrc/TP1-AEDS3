@@ -42,7 +42,7 @@ public class MenuCategorias {
                     incluirCategoria();
                     break;
                 case 3:
-                    // alterarTarefa();
+                    alterarCategoria();
                     break;
                 case 4:
                     excluirCategoria();
@@ -99,6 +99,52 @@ public class MenuCategorias {
             System.out.println("Categoria excluida com sucesso!!\n");
         }else{
             System.out.println("Categoria nao encontrada\n");
+        }
+
+    }
+
+    public void alterarCategoria()throws Exception{
+        System.out.println("\nAlteracao de categoria: ");
+        System.out.println("\nDigite o nome da categoria que deseja alterar: ");
+
+        String nome = filler(console.nextLine());
+
+        Categoria obj = arqCategorias.read(nome);
+
+        if(obj != null){
+            System.out.println(obj);
+            System.out.println("\nQual informação gostaria de alterar?");
+            System.out.println("1 - Nome");
+            System.out.println("0 - Voltar");
+
+            int option;
+            System.out.print("Opção: ");
+            try {
+                option = Integer.valueOf(console.nextLine());
+            } catch (NumberFormatException e) {
+                option = -1;
+            }
+
+            switch (option) {
+                case 1:
+                    System.out.println("Digite o novo nome da Categoria");
+                    String novoNome = filler(console.nextLine());
+                    obj.setNome(novoNome);
+                    if(arqCategorias.update(obj, nome)){
+                        System.out.println("Atualizacao realizada com sucesso");
+                    }else{
+                        System.out.println("ERRO");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Atualizacao cancelada");
+                    break;
+                default:
+                    System.out.println("Atualizacao cancelada");
+                    break;
+            }
+        }else{
+            System.out.println("Categoria nao encontrada");
         }
 
     }

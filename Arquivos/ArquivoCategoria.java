@@ -18,7 +18,7 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
         );
     }
 
-    @Override
+    //@Override
     public int create(Categoria c) throws Exception {
         int id = super.create(c);
         indiceIndiretoParNomeIdCategoria.create(new ParNomeId(c.getNome(), id));
@@ -51,9 +51,9 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
         return false;
     }
 
-    @Override
-    public boolean update(Categoria novaCategoria) throws Exception {
-        Categoria categoriaVelha = read(novaCategoria.getNome());
+    //@Override
+    public boolean update(Categoria novaCategoria, String nome) throws Exception {
+        Categoria categoriaVelha = read(nome);
         if(super.update(novaCategoria)) {
             if(novaCategoria.getNome().compareTo(categoriaVelha.getNome())!=0) {
                 indiceIndiretoParNomeIdCategoria.delete(ParNomeId.hash(categoriaVelha.getNome()));
