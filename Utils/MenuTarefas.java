@@ -2,7 +2,6 @@ package Utils;
 
 import java.util.Scanner;
 import Arquivos.ArquivoTarefa;
-import Objetos.Categoria;
 import Objetos.Tarefas;
 import java.time.LocalDate;
 
@@ -19,7 +18,6 @@ public class MenuTarefas {
 
         int opcao;
         do {
-
             System.out.println("AEDsIII");
             System.out.println("-------");
             System.out.println("\n> Início > Tarefas");
@@ -212,9 +210,7 @@ public class MenuTarefas {
 
     public Status getNewStatus(){
         Status sts = null;
-        int option;
-
-        
+        int option;        
 
         do{
             System.out.println("Escolha um novo status: ");
@@ -248,8 +244,7 @@ public class MenuTarefas {
                     System.out.println("opcao invalida");
                     break;
             }
-        }while(option != 0);
-        
+        }while(option != 0);        
         return sts;
 
     }
@@ -300,8 +295,6 @@ public class MenuTarefas {
         int dia;
         int mes;
         int ano;
-
-        // alterar para integer
 
         System.out.println("Informe o dia de conclusao:");
         dia = console.nextInt();
