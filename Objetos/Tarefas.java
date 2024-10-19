@@ -6,6 +6,8 @@ import Utils.Status;
 
 import java.io.*;
 import java.time.LocalDate;
+import Utils.MenuTarefas;
+import Arquivos.ArquivoCategoria;
 
 public class Tarefas implements Registro {
     private int id;
@@ -175,7 +177,46 @@ public class Tarefas implements Registro {
     }
 
     @Override
-    public String toString() {
+    public String toString(){
+
+
+        try {
+            return "\nID........: " + this.id +
+                    "\nName......: " + unfiller(this.nome) +
+                    "\nCreated At: " + this.createdAt.toString() +
+                    "\nStatus....: " + this.status +
+                    (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +
+                    "\nPriority..: " + getPriorityType(this.priority) +
+                    "\nCategoria.: " + getNomeCategoria(this.idCategoria);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return " ";
+    }
+
+    public String getNomeCategoria(int id) throws Exception{
+        ArquivoCategoria arqCategoria = new ArquivoCategoria();
+        
+        return unfiller(arqCategoria.read(id).getNome());
+    }
+
+    public String filler(String nome) {
+        if (nome.length() > 20) {
+            throw new IllegalArgumentException("O nome excede o tamanho máximo permitido.");
+        }
+        char[] filler = new char[20];
+        for (int i = 0; i < nome.length(); i++) {
+            filler[i] = nome.charAt(i);
+        }
+        for (int i = nome.length(); i < filler.length; i++) {
+            filler[i] = '|';
+        }
+        String tmp = new String(filler);
+        nome = tmp;
+        return nome;
+    }
+
+    public String unfiller(String nome){
         char[] tmp = new char[20];
         int j = 0;
         for (int i = 0; i < 20; i++) {
@@ -184,14 +225,7 @@ public class Tarefas implements Registro {
                 j++;
             }
         }
-
         String fixed = new String(tmp);
-        return "\nID........: " + this.id +
-                "\nName......: " + fixed +
-                "\nCreated At: " + this.createdAt.toString() +
-                "\nStatus....: " + this.status +
-                (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +
-                "\nPriority..: " + getPriorityType(this.priority) +
-                "\nCategoria.: " + this.idCategoria;
+        return fixed;
     }
 }
