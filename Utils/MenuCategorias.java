@@ -3,11 +3,14 @@ package Utils;
 import java.util.Scanner;
 import Arquivos.ArquivoCategoria;
 import Objetos.Categoria;
+import java.text.Normalizer;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class MenuCategorias {
 
     ArquivoCategoria arqCategorias;
-    private static Scanner console = new Scanner(System.in);
+    private Scanner console = new Scanner(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
     public MenuCategorias() throws Exception {
         arqCategorias = new ArquivoCategoria();
@@ -58,60 +61,63 @@ public class MenuCategorias {
     }
 
     public void buscarCategoria() throws Exception {
-        String nome;
 
         System.out.println("\nPesquisa de categoria: ");
         System.out.println("\nDigite o nome da categoria que deseja pesquisar: ");
-        nome = filler(console.nextLine());
 
-        Categoria obj = arqCategorias.read(nome);
-        if(obj != null){
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
+
+        Categoria obj = arqCategorias.read(nomeLimpo);
+        if (obj != null) {
             System.out.println(obj);
-        }else{
+        } else {
             System.out.println("Categoria nao encontrada");
         }
-        
+
     }
 
     public void incluirCategoria() throws Exception {
-        String nome;
 
         System.out.println("\nInclusão de categoria: ");
         System.out.println("\nDigite o nome da categoria que deseja incluir: ");
-        nome = filler(console.nextLine());
 
-        Categoria novaTarefa = new Categoria(nome); 
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
 
-        System.out.println(novaTarefa.getNome());
+        Categoria novaCategoria = new Categoria(nomeLimpo);
 
-        arqCategorias.create(novaTarefa);
+        System.out.println(novaCategoria.getNome());
+
+        arqCategorias.create(novaCategoria);
     }
 
-    public void excluirCategoria()throws Exception{
-        String nome;
+    public void excluirCategoria() throws Exception {
 
         System.out.println("\nExclusao de categoria: ");
         System.out.println("\nDigite o nome da categoria que deseja excluir: ");
 
-        nome = filler(console.nextLine());
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
 
-        if(arqCategorias.delete(nome)){
+        if (arqCategorias.delete(nomeLimpo)) {
             System.out.println("Categoria excluida com sucesso!!\n");
-        }else{
+        } else {
             System.out.println("Categoria nao encontrada\n");
         }
 
     }
 
-    public void alterarCategoria()throws Exception{
+    public void alterarCategoria() throws Exception {
         System.out.println("\nAlteracao de categoria: ");
         System.out.println("\nDigite o nome da categoria que deseja alterar: ");
 
-        String nome = filler(console.nextLine());
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
 
-        Categoria obj = arqCategorias.read(nome);
+        Categoria obj = arqCategorias.read(nomeLimpo);
 
-        if(obj != null){
+        if (obj != null) {
             System.out.println(obj);
             System.out.println("\nQual informação gostaria de alterar?");
             System.out.println("1 - Nome");
@@ -128,11 +134,14 @@ public class MenuCategorias {
             switch (option) {
                 case 1:
                     System.out.println("Digite o novo nome da Categoria");
-                    String novoNome = filler(console.nextLine());
-                    obj.setNome(novoNome);
-                    if(arqCategorias.update(obj, nome)){
+
+                    String nomeNovo = console.nextLine();
+                    nomeNovo = tratarNome(nomeNovo);
+
+                    obj.setNome(nomeNovo);
+                    if (arqCategorias.update(obj, nomeLimpo)) {
                         System.out.println("Atualizacao realizada com sucesso");
-                    }else{
+                    } else {
                         System.out.println("ERRO");
                     }
                     break;
@@ -143,10 +152,20 @@ public class MenuCategorias {
                     System.out.println("Atualizacao cancelada");
                     break;
             }
-        }else{
+        } else {
             System.out.println("Categoria nao encontrada");
         }
 
+    }
+
+    public String tratarNome(String nome) {
+        // Trata acentos
+        String nomeLimpo = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+
+        // Preenche para ficar com tamanho exato
+        nomeLimpo = filler(nomeLimpo);
+
+        return nomeLimpo;
     }
 
     public String filler(String nome) {
@@ -163,5 +182,18 @@ public class MenuCategorias {
         String tmp = new String(filler);
         nome = tmp;
         return nome;
+    }
+
+    public String unfiller(String nome) {
+        char[] tmp = new char[20];
+        int j = 0;
+        for (int i = 0; i < 20; i++) {
+            if (nome.charAt(i) != '|') {
+                tmp[j] = nome.charAt(i);
+                j++;
+            }
+        }
+        String fixed = new String(tmp);
+        return fixed;
     }
 }

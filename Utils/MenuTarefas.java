@@ -47,7 +47,6 @@ public class MenuTarefas {
                     buscarTarefa();
                     break;
                 case 2:
-                    // TODO mensagem de sucesso
                     incluirTarefa();
                     break;
                 case 3:
@@ -96,12 +95,10 @@ public class MenuTarefas {
             Tarefas novaTarefa = new Tarefas(nome);
             novaTarefa.setIdCategoria(categoria);
             arqTarefas.create(novaTarefa);
-            //System.out.println(novaTarefa.getNome());
+            System.out.println("Tarefa incluída com sucesso!!\n");
         }else{
             System.out.println("ERRO");
-        }
-        
-        //Tarefas novaTarefa = new Tarefas(nomeLimpo);
+        }        
     }
 
     public void excluirTarefa() throws Exception {
@@ -272,7 +269,6 @@ public class MenuTarefas {
         int option;
         int position = 0;
 
-
         if(categorias != null){
             do{
                 int i = 1;
@@ -286,8 +282,7 @@ public class MenuTarefas {
                 if(option <= categorias.size() && option > 0){
                     position = option - 1;
                     option = 0;
-                }
-                
+                }                
                 
             }while(option != 0);
            

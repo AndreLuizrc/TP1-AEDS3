@@ -6,7 +6,6 @@ import Utils.Status;
 
 import java.io.*;
 import java.time.LocalDate;
-import Utils.MenuTarefas;
 import Arquivos.ArquivoCategoria;
 
 public class Tarefas implements Registro {

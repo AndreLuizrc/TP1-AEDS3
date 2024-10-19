@@ -48,8 +48,7 @@ public class IO {
         }
     }
 }
-// TODO tirar pipe do sysout
-// TODO editar incluir CATEGORIA
+// TODO interface de usuário
 
 // cls && javac IO.java && java IO
 // git clean -f
