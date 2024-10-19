@@ -28,19 +28,19 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
 
     public Tarefas read(String nome) throws Exception {
         System.out.println(ParNomeId.hash(nome));
-        ParNomeId pci = indiceIndiretoParNomeIdTarefas.read(ParNomeId.hash(nome));
-        if(pci == null){
+        ParNomeId pni = indiceIndiretoParNomeIdTarefas.read(ParNomeId.hash(nome));
+        if(pni == null){
             System.out.println("entrei");
             return null;
         }
             
-        return read(pci.getId());
+        return read(pni.getId());
     }
     
     public boolean delete(String nome) throws Exception {
-        ParNomeId pci = indiceIndiretoParNomeIdTarefas.read(ParNomeId.hash(nome));
-        if(pci != null) 
-            if(delete(pci.getId())) 
+        ParNomeId pni = indiceIndiretoParNomeIdTarefas.read(ParNomeId.hash(nome));
+        if(pni != null) 
+            if(delete(pni.getId())) 
                 return indiceIndiretoParNomeIdTarefas.delete(ParNomeId.hash(nome));
         return false;
     }

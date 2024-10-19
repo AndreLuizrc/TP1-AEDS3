@@ -27,21 +27,27 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
     }
 
     public Categoria read(String nome) throws Exception {
-        System.out.println(ParNomeId.hash(nome));
-        ParNomeId pci = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
-        if(pci == null){
+        //System.out.println(ParNomeId.hash(nome));
+        ParNomeId pni = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
+        //System.out.println("Entrei " + pni.getNome());
+        if(pni == null){
             System.out.println("entrei");
             return null;
         }
             
-        return read(pci.getId());
+        return read(pni.getId());
     }
     
     public boolean delete(String nome) throws Exception {
-        ParNomeId pci = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
-        if(pci != null) 
-            if(delete(pci.getId())) 
+        
+        ParNomeId pni = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
+        //System.out.println("Entrei " + pni.getNome());
+        if(pni != null){
+            if(delete(pni.getId())){
                 return indiceIndiretoParNomeIdCategoria.delete(ParNomeId.hash(nome));
+            }
+        } 
+            
         return false;
     }
 

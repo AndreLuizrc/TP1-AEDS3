@@ -45,7 +45,7 @@ public class MenuCategorias {
                     // alterarTarefa();
                     break;
                 case 4:
-                    // excluirTarefa();
+                    excluirCategoria();
                     break;
                 case 0:
                     break;
@@ -60,18 +60,24 @@ public class MenuCategorias {
     public void buscarCategoria() throws Exception {
         String nome;
 
-        System.out.println("\nPesquisa de tarefa: ");
-        System.out.println("\nDigite o nome da Categoria que deseja pesquisar: ");
+        System.out.println("\nPesquisa de categoria: ");
+        System.out.println("\nDigite o nome da categoria que deseja pesquisar: ");
         nome = filler(console.nextLine());
 
-        System.out.println(arqCategorias.read(nome));
+        Categoria obj = arqCategorias.read(nome);
+        if(obj != null){
+            System.out.println(obj);
+        }else{
+            System.out.println("Categoria nao encontrada");
+        }
+        
     }
 
     public void incluirCategoria() throws Exception {
         String nome;
 
-        System.out.println("\nInclusão de tarefa: ");
-        System.out.println("\nDigite o nome da Tarefa que deseja incluir: ");
+        System.out.println("\nInclusão de categoria: ");
+        System.out.println("\nDigite o nome da categoria que deseja incluir: ");
         nome = filler(console.nextLine());
 
         Categoria novaTarefa = new Categoria(nome); 
@@ -79,6 +85,22 @@ public class MenuCategorias {
         System.out.println(novaTarefa.getNome());
 
         arqCategorias.create(novaTarefa);
+    }
+
+    public void excluirCategoria()throws Exception{
+        String nome;
+
+        System.out.println("\nExclusao de categoria: ");
+        System.out.println("\nDigite o nome da categoria que deseja excluir: ");
+
+        nome = filler(console.nextLine());
+
+        if(arqCategorias.delete(nome)){
+            System.out.println("Categoria excluida com sucesso!!\n");
+        }else{
+            System.out.println("Categoria nao encontrada\n");
+        }
+
     }
 
     public String filler(String nome) {
