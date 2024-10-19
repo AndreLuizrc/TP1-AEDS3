@@ -133,6 +133,7 @@ public class MenuTarefas {
             System.out.println("2 - Status");
             System.out.println("3 - Prioridade");
             System.out.println("4 - Data de conclusao");
+            System.out.println("5 - Categoria");
             System.out.println("0 - Voltar");
 
             int option;
@@ -194,6 +195,16 @@ public class MenuTarefas {
                         }else{
                             System.out.println("ERRO");
                         }
+                    }else{
+                        System.out.println("ERRO");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Escolha a nova categoria");
+                    int novaCategoria = getCategoria();
+                    if(novaCategoria != 0){
+                        obj.setIdCategoria(novaCategoria);
+                        arqTarefas.update(obj, nome);
                     }else{
                         System.out.println("ERRO");
                     }

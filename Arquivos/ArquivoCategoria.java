@@ -78,7 +78,7 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
         byte[] b;
 
         if(file != null){
-            System.out.println("entrei");
+            //System.out.println("entrei");
             file.seek(4);
 
             while(file.getFilePointer() < file.length()){
