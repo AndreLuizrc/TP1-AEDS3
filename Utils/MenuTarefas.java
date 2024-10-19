@@ -2,7 +2,6 @@ package Utils;
 
 import java.util.Scanner;
 import Arquivos.ArquivoTarefa;
-import Objetos.Categoria;
 import Objetos.Tarefas;
 import java.time.LocalDate;
 
