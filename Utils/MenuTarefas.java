@@ -82,26 +82,24 @@ public class MenuTarefas {
 
     public void incluirTarefa() throws Exception {
         String nome;
+        int categoria;
 
         System.out.println("\nInclusão de tarefa: ");
         System.out.println("\nDigite o nome da Tarefa que deseja incluir: ");
         nome = filler(console.nextLine());
 
-        Tarefas novaTarefa = new Tarefas(nome);
+        System.out.println("\nEscolha a categoria a qual esta tarefa pertence: ");
+        categoria = getCategoria();
+
+        if(categoria != 0){
+            Tarefas novaTarefa = new Tarefas(nome);
+            novaTarefa.setIdCategoria(categoria);
+            arqTarefas.create(novaTarefa);
+            //System.out.println(novaTarefa.getNome());
+        }else{
+            System.out.println("ERRO");
+        }
         
-
-
-        /*ArrayList<Categoria> categorias = arqCategoria.getAllCategories();
-        if(categorias != null){
-            for(Categoria item : categorias){
-                System.out.println(item.getNome());
-            }
-        }*/
-        
-
-        System.out.println(novaTarefa.getNome());
-
-        arqTarefas.create(novaTarefa);
     }
 
     public void excluirTarefa()throws Exception{
@@ -224,6 +222,49 @@ public class MenuTarefas {
         String tmp = new String(filler);
         nome = tmp;
         return nome;
+    }
+
+    public String unfiller(String nome){
+        char[] tmp = new char[20];
+        int j = 0;
+        for (int i = 0; i < 20; i++) {
+            if (nome.charAt(i) != '|') {
+                tmp[j] = nome.charAt(i);
+                j++;
+            }
+        }
+        String fixed = new String(tmp);
+        return fixed;
+    }
+
+    public int getCategoria()throws Exception{
+        ArrayList<Categoria> categorias = arqCategoria.getAllCategories();
+        int option;
+        int position = 0;
+
+
+        if(categorias != null){
+            do{
+                int i = 1;
+                for(Categoria item : categorias){
+                    System.out.println("-" + i + " " + unfiller(item.getNome()));
+                    i++;
+                }
+                System.out.println("opcao:");
+                option = console.nextInt();
+                console.nextLine();
+                if(option < categorias.size() && option > 0){
+                    position = option - 1;
+                    option = 0;
+                }
+                
+                
+            }while(option != 0);
+           
+            return categorias.get(position).getId();
+        }
+
+        return 0;
     }
 
     public Status getNewStatus(){

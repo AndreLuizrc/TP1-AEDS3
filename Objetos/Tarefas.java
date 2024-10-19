@@ -184,7 +184,7 @@ public class Tarefas implements Registro {
                 j++;
             }
         }
-        // FAZER TRATAMENTO DE ACENTOS
+
         String fixed = new String(tmp);
         return "\nID........: " + this.id +
                 "\nName......: " + fixed +
