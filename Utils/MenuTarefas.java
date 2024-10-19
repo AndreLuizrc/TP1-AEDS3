@@ -253,7 +253,7 @@ public class MenuTarefas {
                 System.out.println("opcao:");
                 option = console.nextInt();
                 console.nextLine();
-                if(option < categorias.size() && option > 0){
+                if(option <= categorias.size() && option > 0){
                     position = option - 1;
                     option = 0;
                 }
