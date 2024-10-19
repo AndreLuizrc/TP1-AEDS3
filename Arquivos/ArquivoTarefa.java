@@ -45,9 +45,9 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
         return false;
     }
 
-    @Override
-    public boolean update(Tarefas novaTarefa) throws Exception {
-        Tarefas tarefaVelha = read(novaTarefa.getNome());
+    //@Override
+    public boolean update(Tarefas novaTarefa, String nome) throws Exception {
+        Tarefas tarefaVelha = read(nome);
         if(super.update(novaTarefa)) {
             if(novaTarefa.getNome().compareTo(tarefaVelha.getNome())!=0) {
                 indiceIndiretoParNomeIdTarefas.delete(ParNomeId.hash(tarefaVelha.getNome()));

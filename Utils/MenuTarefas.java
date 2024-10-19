@@ -4,6 +4,7 @@ import java.util.Scanner;
 import Arquivos.ArquivoTarefa;
 import Objetos.Categoria;
 import Objetos.Tarefas;
+import java.time.LocalDate;
 
 public class MenuTarefas {
 
@@ -43,7 +44,7 @@ public class MenuTarefas {
                     incluirTarefa();
                     break;
                 case 3:
-                    // alterarTarefa();
+                    alterarTarefa();
                     break;
                 case 4:
                     excluirTarefa();
@@ -103,6 +104,96 @@ public class MenuTarefas {
 
     }
 
+    public void alterarTarefa()throws Exception{
+        System.out.println("\nAlteracao de tarefa: ");
+        System.out.println("\nDigite o nome da tarefa que deseja alterar: ");
+
+        String nome = filler(console.nextLine());
+
+        Tarefas obj = arqTarefas.read(nome);
+
+        if(obj != null){
+            System.out.println(obj);
+            System.out.println("\nQual informação gostaria de alterar?");
+            System.out.println("1 - Nome");
+            System.out.println("2 - Status");
+            System.out.println("3 - Prioridade");
+            System.out.println("4 - Data de conclusao");
+            System.out.println("0 - Voltar");
+
+            int option;
+            System.out.print("Opção: ");
+            try {
+                option = Integer.valueOf(console.nextLine());
+            } catch (NumberFormatException e) {
+                option = -1;
+            }
+
+            switch (option) {
+                case 1:
+                    System.out.println("Digite o novo nome da Tarefa");
+                    String novoNome = filler(console.nextLine());
+                    obj.setNome(novoNome);
+                    if(arqTarefas.update(obj, nome)){
+                        System.out.println("Atualizacao realizada com sucesso");
+                    }else{
+                        System.out.println("ERRO");
+                    }
+                    break;
+                case 2:
+                    Status newStatus = getNewStatus();
+                    if(newStatus != null){
+                        obj.setStatus(newStatus);
+                        if(newStatus == Status.CONCLUIDO){
+                            LocalDate dataConclusao = LocalDate.now();
+                            obj.setDoneAt(dataConclusao);
+                        }
+                        if(arqTarefas.update(obj, nome)){
+                            System.out.println("Status atualizado com sucesso!!");
+                        }else{
+                            System.out.println("ERRO");
+                        }
+                    }else{
+                        System.out.println("ERRO");
+                    }
+                    break;
+                case 3:
+                    byte newPriority = getNewPriority();
+                    if(newPriority != 0){
+                        obj.setPriority(newPriority);
+                        if(arqTarefas.update(obj, nome)){
+                            System.out.println("Prioridade atualizada com sucesso!!");
+                        }else{
+                            System.out.println("ERRO");
+                        }
+                    }else{
+                        System.out.println("ERRO");
+                    }
+                    break;
+                case 4:
+                    LocalDate newDate = getNewConclusionDate();
+                    if(newDate != null){
+                        obj.setDoneAt(newDate);
+                        obj.setStatus(Status.CONCLUIDO);
+                        if(arqTarefas.update(obj, nome)){
+                            System.out.println("Data de conclusao atualizada com sucesso!!");
+                        }else{
+                            System.out.println("ERRO");
+                        }
+                    }else{
+                        System.out.println("ERRO");
+                    }
+                    break;
+                default:
+                    System.out.println("Atualizacao cancelada");
+                    break;
+            }
+        }else{
+            System.out.println("Categoria nao encontrada");
+        }
+
+    }
+
     public String filler(String nome) {
         if (nome.length() > 20) {
             throw new IllegalArgumentException("O nome excede o tamanho máximo permitido.");
@@ -117,5 +208,112 @@ public class MenuTarefas {
         String tmp = new String(filler);
         nome = tmp;
         return nome;
+    }
+
+    public Status getNewStatus(){
+        Status sts = null;
+        int option;
+
+        
+
+        do{
+            System.out.println("Escolha um novo status: ");
+            System.out.println("1- Pendente");
+            System.out.println("2- Em progresso");
+            System.out.println("3- Concluido");
+            System.out.println("0- Voltar");
+
+            System.out.print("Opção: ");
+            try {
+                option = Integer.valueOf(console.nextLine());
+            } catch (NumberFormatException e) {
+                option = -1;
+            }
+            switch (option) {
+                case 1:
+                    sts = Status.PENDENTE;
+                    option = 0;
+                    break;
+                case 2:
+                    sts = Status.PROGRESSO;
+                    option = 0;
+                    break;
+                case 3:
+                    sts = Status.CONCLUIDO;
+                    option = 0;
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("opcao invalida");
+                    break;
+            }
+        }while(option != 0);
+        
+        return sts;
+
+    }
+
+    public byte getNewPriority(){
+        byte prt = 0;
+        int option;
+
+        System.out.println("Escolha a nova prioridade da sua tarefa:");
+        System.out.println("1- ALTA");
+        System.out.println("2- MEDIA");
+        System.out.println("3- BAIXA");
+        System.out.println("0- Voltar");
+
+        System.out.print("Opção: ");
+            try {
+                option = Integer.valueOf(console.nextLine());
+            } catch (NumberFormatException e) {
+                option = -1;
+            }
+
+        do{
+            switch (option) {
+                case 1:
+                    prt = 1;  
+                    option = 0;
+                    break;            
+                case 2:
+                    prt = 2;
+                    option = 0;
+                    break;
+                case 3:
+                    prt = 3;
+                    option = 0;
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Opcao invalida");
+                    break;
+            }
+        }while(option != 0);
+
+        return prt;
+    }
+
+    public LocalDate getNewConclusionDate(){
+        int dia;
+        int mes;
+        int ano;
+
+        // alterar para integer
+
+        System.out.println("Informe o dia de conclusao:");
+        dia = console.nextInt();
+        System.out.println("Informe o mes de conclusao:");
+        mes = console.nextInt();
+        System.out.println("Informe o ano de conclusao:");
+        ano = console.nextInt();
+
+        console.nextLine();
+
+       LocalDate novaData = LocalDate.of(ano, mes, dia);
+
+       return novaData;
     }
 }
