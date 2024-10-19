@@ -28,9 +28,28 @@ public class Categoria implements Registro {
         return id;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return this.nome;
+    }
+
     public String toString() {
+        char[] tmp = new char[20];
+        int j = 0;
+        for (int i = 0; i < 20; i++) {
+            if (nome.charAt(i) != '|') {
+                tmp[j] = nome.charAt(i);
+                j++;
+            }
+        }
+        // FAZER TRATAMENTO DE ACENTOS
+        String fixed = new String(tmp);
+        
         return "\nID..: " + this.id +
-               "\nNome: " + this.nome;
+               "\nNome: " + fixed;
     }
 
     public byte[] toByteArray() throws IOException {

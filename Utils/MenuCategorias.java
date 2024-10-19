@@ -1,12 +1,11 @@
 package Utils;
 
 import java.util.Scanner;
-
 import Arquivos.ArquivoCategoria;
 import Objetos.Categoria;
 
 public class MenuCategorias {
-        
+
     ArquivoCategoria arqCategorias;
     private static Scanner console = new Scanner(System.in);
 
@@ -14,7 +13,7 @@ public class MenuCategorias {
         arqCategorias = new ArquivoCategoria();
     }
 
-    public void menu() {
+    public void menu() throws Exception {
 
         int opcao;
         do {
@@ -31,22 +30,22 @@ public class MenuCategorias {
             System.out.print("Opção: ");
             try {
                 opcao = Integer.valueOf(console.nextLine());
-            } catch(NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 opcao = -1;
             }
 
             switch (opcao) {
                 case 1:
-                    // buscarCategoria();
+                    buscarCategoria();
                     break;
                 case 2:
                     incluirCategoria();
                     break;
                 case 3:
-                    // alterarCategoria();
+                    // alterarTarefa();
                     break;
                 case 4:
-                    // excluirCategoria();
+                    // excluirTarefa();
                     break;
                 case 0:
                     break;
@@ -58,50 +57,43 @@ public class MenuCategorias {
         } while (opcao != 0);
     }
 
-    public Categoria buscarCategoria(){
+    public void buscarCategoria() throws Exception {
         String nome;
-        boolean dadosCompletos = false;
 
-        do {
-            System.out.print("\nDigite o nome da categoria que deseja buscar: ");
-            nome = console.nextLine();
-            if(nome.length()>=5 || nome.length()==0)
-                dadosCompletos = true;
-            else 
-                System.err.println("O nome da categoria deve ter no mínimo 5 caracteres.");
-        } while(!dadosCompletos);
+        System.out.println("\nPesquisa de tarefa: ");
+        System.out.println("\nDigite o nome da Categoria que deseja pesquisar: ");
+        nome = filler(console.nextLine());
 
-        return null;
-
+        System.out.println(arqCategorias.read(nome));
     }
 
-    public void incluirCategoria() {
+    public void incluirCategoria() throws Exception {
         String nome;
-        boolean dadosCompletos = false;
 
-        System.out.println("\nInclusão de categoria");
-        do {
-            System.out.print("\nNome da categoria (min. de 5 letras): ");
-            nome = console.nextLine();
-            if(nome.length()>=5 || nome.length()==0)
-                dadosCompletos = true;
-            else 
-                System.err.println("O nome da categoria deve ter no mínimo 5 caracteres.");
-        } while(!dadosCompletos);
+        System.out.println("\nInclusão de tarefa: ");
+        System.out.println("\nDigite o nome da Tarefa que deseja incluir: ");
+        nome = filler(console.nextLine());
 
-        if(nome.length()==0) 
-            return;
+        Categoria novaTarefa = new Categoria(nome); 
 
-        System.out.println("Confirma a inclusão da categoria? (S/N) ");
-        char resp = console.nextLine().charAt(0);
-        if(resp=='S' || resp=='s') {
-            try {
-                Categoria c = new Categoria(nome);
-                arqCategorias.create(c);
-                System.out.println("Categoria criada com sucesso.");
-            } catch(Exception e) {
-                System.out.println("Erro do sistema. Não foi possível criar a categoria!");
-            }
+        System.out.println(novaTarefa.getNome());
+
+        arqCategorias.create(novaTarefa);
+    }
+
+    public String filler(String nome) {
+        if (nome.length() > 20) {
+            throw new IllegalArgumentException("O nome excede o tamanho máximo permitido.");
         }
+        char[] filler = new char[20];
+        for (int i = 0; i < nome.length(); i++) {
+            filler[i] = nome.charAt(i);
+        }
+        for (int i = nome.length(); i < filler.length; i++) {
+            filler[i] = '|';
+        }
+        String tmp = new String(filler);
+        nome = tmp;
+        return nome;
     }
-}   
+}

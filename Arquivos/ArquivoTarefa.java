@@ -13,8 +13,8 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
         indiceIndiretoParNomeIdTarefas = new HashExtensivel<>(
             ParNomeId.class.getConstructor(), 
             4, 
-            ".\\dados\\indiceNome.hash_d.db", 
-            ".\\dados\\indiceNome.hash_c.db"
+            ".\\dados\\indiceNomeTarefas.hash_d.db", 
+            ".\\dados\\indiceNomeTarefas.hash_c.db"
         );
     }
 

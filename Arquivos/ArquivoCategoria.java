@@ -3,26 +3,59 @@ package Arquivos;
 import Objetos.ParNomeId;
 import Objetos.Categoria;
 
-//import Objetos.Tarefas;
-
 public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
-    Arquivo<Categoria> arqCategorias;
-    HashExtensivel<ParNomeId> indiceIndiretoCategoria;
+
+    Arquivo<Categoria> arqCategoria;
+    HashExtensivel<ParNomeId> indiceIndiretoParNomeIdCategoria;
 
     public ArquivoCategoria() throws Exception {
         super("categorias", Categoria.class.getConstructor());
+        indiceIndiretoParNomeIdCategoria = new HashExtensivel<>(
+            ParNomeId.class.getConstructor(), 
+            4, 
+            ".\\dados\\indiceNomeCategoria.hash_d.db", 
+            ".\\dados\\indiceNomeCategoria.hash_c.db"
+        );
     }
 
-    /*public void createIndex(Categoria cat) throws Exception{
-        ParNomeId pNI = new ParNomeId(cat.nome, cat.id);
-        System.out.println("alow");
-        indiceIndiretoCategoria.create(pNI);
-        ParNomeId ex = indiceIndiretoCategoria.read(pNI.getId());
-        System.out.println(ex.getNome());
-    }*/
+    @Override
+    public int create(Categoria c) throws Exception {
+        int id = super.create(c);
+        indiceIndiretoParNomeIdCategoria.create(new ParNomeId(c.getNome(), id));
 
-    public Categoria read(String nome){
+        return id;
+    }
 
-        return null;
+    public Categoria read(String nome) throws Exception {
+        System.out.println(ParNomeId.hash(nome));
+        ParNomeId pci = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
+        if(pci == null){
+            System.out.println("entrei");
+            return null;
+        }
+            
+        return read(pci.getId());
+    }
+    
+    public boolean delete(String nome) throws Exception {
+        ParNomeId pci = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
+        if(pci != null) 
+            if(delete(pci.getId())) 
+                return indiceIndiretoParNomeIdCategoria.delete(ParNomeId.hash(nome));
+        return false;
+    }
+
+    @Override
+    public boolean update(Categoria novaCategoria) throws Exception {
+        Categoria categoriaVelha = read(novaCategoria.getNome());
+        if(super.update(novaCategoria)) {
+            if(novaCategoria.getNome().compareTo(categoriaVelha.getNome())!=0) {
+                indiceIndiretoParNomeIdCategoria.delete(ParNomeId.hash(categoriaVelha.getNome()));
+                indiceIndiretoParNomeIdCategoria.create(new ParNomeId(novaCategoria.getNome(), novaCategoria.getId()));
+            }
+            return true;
+        }
+        return false;
     }
 }
+
