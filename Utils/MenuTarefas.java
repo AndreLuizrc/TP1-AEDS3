@@ -1,20 +1,21 @@
 package Utils;
 
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Scanner;
 import Arquivos.ArquivoTarefa;
-import Objetos.Tarefas;
 import Objetos.Categoria;
-import Arquivos.ArquivoCategoria;
+import Objetos.Tarefas;
 import java.time.LocalDate;
-
-
+import java.text.Normalizer;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import Arquivos.ArquivoCategoria;
 
 public class MenuTarefas {
 
     ArquivoTarefa arqTarefas;
     ArquivoCategoria arqCategoria;
-    private static Scanner console = new Scanner(System.in);
+    private Scanner console = new Scanner(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
     public MenuTarefas() throws Exception {
         arqTarefas = new ArquivoTarefa();
@@ -25,7 +26,6 @@ public class MenuTarefas {
 
         int opcao;
         do {
-
             System.out.println("AEDsIII");
             System.out.println("-------");
             System.out.println("\n> Início > Tarefas");
@@ -47,6 +47,7 @@ public class MenuTarefas {
                     buscarTarefa();
                     break;
                 case 2:
+                    // TODO mensagem de sucesso
                     incluirTarefa();
                     break;
                 case 3:
@@ -66,16 +67,16 @@ public class MenuTarefas {
     }
 
     public void buscarTarefa() throws Exception {
-        String nome;
-
         System.out.println("\nPesquisa de tarefa: ");
         System.out.println("\nDigite o nome da Tarefa que deseja pesquisar: ");
-        nome = filler(console.nextLine());
 
-        Tarefas obj = arqTarefas.read(nome);
-        if(obj != null){
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
+
+        Tarefas obj = arqTarefas.read(nomeLimpo);
+        if (obj != null) {
             System.out.println(obj);
-        }else{
+        } else {
             System.out.println("Tarefa nao encontrada");
         }
     }
@@ -100,33 +101,35 @@ public class MenuTarefas {
             System.out.println("ERRO");
         }
         
+        //Tarefas novaTarefa = new Tarefas(nomeLimpo);
     }
 
-    public void excluirTarefa()throws Exception{
-        String nome;
+    public void excluirTarefa() throws Exception {
 
         System.out.println("\nExclusao de tarefa: ");
         System.out.println("\nDigite o nome da tarefa que deseja excluir: ");
 
-        nome = filler(console.nextLine());
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
 
-        if(arqTarefas.delete(nome)){
+        if (arqTarefas.delete(nomeLimpo)) {
             System.out.println("Tarefa excluida com sucesso!!\n");
-        }else{
+        } else {
             System.out.println("Tarefa nao encontrada\n");
         }
 
     }
 
-    public void alterarTarefa()throws Exception{
+    public void alterarTarefa() throws Exception {
         System.out.println("\nAlteracao de tarefa: ");
         System.out.println("\nDigite o nome da tarefa que deseja alterar: ");
 
-        String nome = filler(console.nextLine());
+        String nome = console.nextLine();
+        String nomeLimpo = tratarNome(nome);
 
-        Tarefas obj = arqTarefas.read(nome);
+        Tarefas obj = arqTarefas.read(nomeLimpo);
 
-        if(obj != null){
+        if (obj != null) {
             System.out.println(obj);
             System.out.println("\nQual informação gostaria de alterar?");
             System.out.println("1 - Nome");
@@ -146,53 +149,60 @@ public class MenuTarefas {
 
             switch (option) {
                 case 1:
+                    // alterarNomeTarefa();
                     System.out.println("Digite o novo nome da Tarefa");
-                    String novoNome = filler(console.nextLine());
-                    obj.setNome(novoNome);
-                    if(arqTarefas.update(obj, nome)){
+
+                    String nomeNovo = console.nextLine();
+                    nomeNovo = tratarNome(nomeNovo);
+
+                    obj.setNome(nomeNovo);
+                    if (arqTarefas.update(obj, nomeLimpo)) {
                         System.out.println("Atualizacao realizada com sucesso");
-                    }else{
+                    } else {
                         System.out.println("ERRO");
                     }
                     break;
                 case 2:
+                    // alterarStatusTarefa();
                     Status newStatus = getNewStatus();
-                    if(newStatus != null){
+                    if (newStatus != null) {
                         obj.setStatus(newStatus);
-                        if(newStatus == Status.CONCLUIDO){
+                        if (newStatus == Status.CONCLUIDO) {
                             LocalDate dataConclusao = LocalDate.now();
                             obj.setDoneAt(dataConclusao);
                         }
-                        if(arqTarefas.update(obj, nome)){
+                        if (arqTarefas.update(obj, nomeLimpo)) {
                             System.out.println("Status atualizado com sucesso!!");
-                        }else{
+                        } else {
                             System.out.println("ERRO");
                         }
-                    }else{
+                    } else {
                         System.out.println("ERRO");
                     }
                     break;
                 case 3:
+                    // alterarStatusTarefa();
                     byte newPriority = getNewPriority();
-                    if(newPriority != 0){
+                    if (newPriority != 0) {
                         obj.setPriority(newPriority);
-                        if(arqTarefas.update(obj, nome)){
+                        if (arqTarefas.update(obj, nomeLimpo)) {
                             System.out.println("Prioridade atualizada com sucesso!!");
-                        }else{
+                        } else {
                             System.out.println("ERRO");
                         }
-                    }else{
+                    } else {
                         System.out.println("ERRO");
                     }
                     break;
                 case 4:
+                    // alterarDataTarefa();
                     LocalDate newDate = getNewConclusionDate();
-                    if(newDate != null){
+                    if (newDate != null) {
                         obj.setDoneAt(newDate);
                         obj.setStatus(Status.CONCLUIDO);
-                        if(arqTarefas.update(obj, nome)){
+                        if (arqTarefas.update(obj, nomeLimpo)) {
                             System.out.println("Data de conclusao atualizada com sucesso!!");
-                        }else{
+                        } else {
                             System.out.println("ERRO");
                         }
                     }else{
@@ -204,7 +214,7 @@ public class MenuTarefas {
                     int novaCategoria = getCategoria();
                     if(novaCategoria != 0){
                         obj.setIdCategoria(novaCategoria);
-                        arqTarefas.update(obj, nome);
+                        arqTarefas.update(obj, nomeLimpo);
                     }else{
                         System.out.println("ERRO");
                     }
@@ -213,10 +223,19 @@ public class MenuTarefas {
                     System.out.println("Atualizacao cancelada");
                     break;
             }
-        }else{
+        } else {
             System.out.println("Categoria nao encontrada");
         }
+    }
 
+    public String tratarNome(String nome) {
+        // Trata acentos
+        String nomeLimpo = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
+
+        // Preenche para ficar com tamanho exato
+        nomeLimpo = filler(nomeLimpo);
+
+        return nomeLimpo;
     }
 
     public String filler(String nome) {
@@ -282,9 +301,7 @@ public class MenuTarefas {
         Status sts = null;
         int option;
 
-        
-
-        do{
+        do {
             System.out.println("Escolha um novo status: ");
             System.out.println("1- Pendente");
             System.out.println("2- Em progresso");
@@ -316,13 +333,12 @@ public class MenuTarefas {
                     System.out.println("opcao invalida");
                     break;
             }
-        }while(option != 0);
-        
+        } while (option != 0);
         return sts;
 
     }
 
-    public byte getNewPriority(){
+    public byte getNewPriority() {
         byte prt = 0;
         int option;
 
@@ -333,18 +349,18 @@ public class MenuTarefas {
         System.out.println("0- Voltar");
 
         System.out.print("Opção: ");
-            try {
-                option = Integer.valueOf(console.nextLine());
-            } catch (NumberFormatException e) {
-                option = -1;
-            }
+        try {
+            option = Integer.valueOf(console.nextLine());
+        } catch (NumberFormatException e) {
+            option = -1;
+        }
 
-        do{
+        do {
             switch (option) {
                 case 1:
-                    prt = 1;  
+                    prt = 1;
                     option = 0;
-                    break;            
+                    break;
                 case 2:
                     prt = 2;
                     option = 0;
@@ -359,17 +375,15 @@ public class MenuTarefas {
                     System.out.println("Opcao invalida");
                     break;
             }
-        }while(option != 0);
+        } while (option != 0);
 
         return prt;
     }
 
-    public LocalDate getNewConclusionDate(){
+    public LocalDate getNewConclusionDate() {
         int dia;
         int mes;
         int ano;
-
-        // alterar para integer
 
         System.out.println("Informe o dia de conclusao:");
         dia = console.nextInt();
@@ -380,8 +394,8 @@ public class MenuTarefas {
 
         console.nextLine();
 
-       LocalDate novaData = LocalDate.of(ano, mes, dia);
+        LocalDate novaData = LocalDate.of(ano, mes, dia);
 
-       return novaData;
+        return novaData;
     }
 }
