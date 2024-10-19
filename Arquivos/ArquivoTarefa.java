@@ -27,10 +27,10 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
     }
 
     public Tarefas read(String nome) throws Exception {
-        System.out.println(ParNomeId.hash(nome));
+        //System.out.println(ParNomeId.hash(nome));
         ParNomeId pni = indiceIndiretoParNomeIdTarefas.read(ParNomeId.hash(nome));
         if(pni == null){
-            System.out.println("entrei");
+            //System.out.println("entrei");
             return null;
         }
             

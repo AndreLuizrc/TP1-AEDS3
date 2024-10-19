@@ -2,6 +2,7 @@ package Utils;
 
 import java.util.Scanner;
 import Arquivos.ArquivoTarefa;
+import Objetos.Categoria;
 import Objetos.Tarefas;
 
 public class MenuTarefas {
@@ -45,7 +46,7 @@ public class MenuTarefas {
                     // alterarTarefa();
                     break;
                 case 4:
-                    // excluirTarefa();
+                    excluirTarefa();
                     break;
                 case 0:
                     break;
@@ -64,7 +65,12 @@ public class MenuTarefas {
         System.out.println("\nDigite o nome da Tarefa que deseja pesquisar: ");
         nome = filler(console.nextLine());
 
-        System.out.println(arqTarefas.read(nome));
+        Tarefas obj = arqTarefas.read(nome);
+        if(obj != null){
+            System.out.println(obj);
+        }else{
+            System.out.println("Tarefa nao encontrada");
+        }
     }
 
     public void incluirTarefa() throws Exception {
@@ -79,6 +85,22 @@ public class MenuTarefas {
         System.out.println(novaTarefa.getNome());
 
         arqTarefas.create(novaTarefa);
+    }
+
+    public void excluirTarefa()throws Exception{
+        String nome;
+
+        System.out.println("\nExclusao de tarefa: ");
+        System.out.println("\nDigite o nome da tarefa que deseja excluir: ");
+
+        nome = filler(console.nextLine());
+
+        if(arqTarefas.delete(nome)){
+            System.out.println("Tarefa excluida com sucesso!!\n");
+        }else{
+            System.out.println("Tarefa nao encontrada\n");
+        }
+
     }
 
     public String filler(String nome) {

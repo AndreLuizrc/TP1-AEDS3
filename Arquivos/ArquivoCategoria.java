@@ -31,7 +31,7 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
         ParNomeId pni = indiceIndiretoParNomeIdCategoria.read(ParNomeId.hash(nome));
         //System.out.println("Entrei " + pni.getNome());
         if(pni == null){
-            System.out.println("entrei");
+            //System.out.println("entrei");
             return null;
         }
             
