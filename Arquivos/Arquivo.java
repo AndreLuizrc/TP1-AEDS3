@@ -162,5 +162,9 @@ public class Arquivo<T extends Registro> {
         indiceDireto.close();
     }
 
+    public RandomAccessFile getPointer(){
+        return this.arquivo;
+    }
+
 
 }

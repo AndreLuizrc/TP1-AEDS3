@@ -3,6 +3,10 @@ package Arquivos;
 import Objetos.ParNomeId;
 import Objetos.Categoria;
 
+import java.io.RandomAccessFile;
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
 
     Arquivo<Categoria> arqCategoria;
@@ -62,6 +66,38 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<Categoria> getAllCategories()throws Exception{
+        ArrayList<Categoria> lista = new ArrayList<>();
+        RandomAccessFile file = super.getPointer();
+
+        Categoria obj;
+        byte tomb;
+        short len;
+        byte[] b;
+
+        if(file != null){
+            System.out.println("entrei");
+            file.seek(4);
+
+            while(file.getFilePointer() < file.length()){
+
+                obj = new Categoria();
+                tomb = file.readByte();
+                len = file.readShort();
+                b = new byte[len];
+                file.read(b);
+
+
+                if(tomb == ' '){
+                        obj.fromByteArray(b);
+                        lista.add(obj);
+                }
+            }
+        }
+        
+        return lista;
     }
 }
 

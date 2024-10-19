@@ -14,6 +14,7 @@ public class Tarefas implements Registro {
     private LocalDate doneAt;
     private Status status;
     private byte priority;
+    private int idCategoria;
 
     public Tarefas() {
         this.id = 0;
@@ -22,6 +23,7 @@ public class Tarefas implements Registro {
         this.doneAt = null;
         this.status = Status.PENDENTE;
         this.priority = 1;
+        this.idCategoria = 0;
     }
 
     public Tarefas(int id, String nome, LocalDate createdAt) {
@@ -31,6 +33,7 @@ public class Tarefas implements Registro {
         this.doneAt = null;
         this.status = Status.PENDENTE;
         this.priority = 1;
+        this.idCategoria = 0;
     }
 
     public Tarefas(String nome) {
@@ -40,6 +43,7 @@ public class Tarefas implements Registro {
         this.doneAt = null;
         this.status = Status.PENDENTE;
         this.priority = 1;
+        this.idCategoria = 0;
     }
 
     // Preenche com espaços em branco para que o nome tenha o tamanho fixo correto
@@ -118,6 +122,14 @@ public class Tarefas implements Registro {
         return this.id;
     }
 
+    public int getIdCategoria(){
+        return this.idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria){
+        this.idCategoria = idCategoria;
+    }
+
     @Override
     public byte[] toByteArray() throws Exception {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -136,6 +148,7 @@ public class Tarefas implements Registro {
 
         dos.writeUTF(this.status.toString());
         dos.write(this.priority);
+        dos.writeInt(idCategoria);
 
         return baos.toByteArray();
     }
@@ -158,6 +171,7 @@ public class Tarefas implements Registro {
 
         this.status = Status.valueOf(dis.readUTF());
         this.priority = (byte) dis.read();
+        this.idCategoria = dis.readInt();
     }
 
     @Override
@@ -177,6 +191,7 @@ public class Tarefas implements Registro {
                 "\nCreated At: " + this.createdAt.toString() +
                 "\nStatus....: " + this.status +
                 (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +
-                "\nPriority..: " + getPriorityType(this.priority);
+                "\nPriority..: " + getPriorityType(this.priority) +
+                "\nCategoria.: " + this.idCategoria;
     }
 }

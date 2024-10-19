@@ -1,18 +1,24 @@
 package Utils;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 import Arquivos.ArquivoTarefa;
-import Objetos.Categoria;
 import Objetos.Tarefas;
+import Objetos.Categoria;
+import Arquivos.ArquivoCategoria;
 import java.time.LocalDate;
+
+
 
 public class MenuTarefas {
 
     ArquivoTarefa arqTarefas;
+    ArquivoCategoria arqCategoria;
     private static Scanner console = new Scanner(System.in);
 
     public MenuTarefas() throws Exception {
         arqTarefas = new ArquivoTarefa();
+        arqCategoria = new ArquivoCategoria();
     }
 
     public void menu() throws Exception {
@@ -81,7 +87,17 @@ public class MenuTarefas {
         System.out.println("\nDigite o nome da Tarefa que deseja incluir: ");
         nome = filler(console.nextLine());
 
-        Tarefas novaTarefa = new Tarefas(nome); 
+        Tarefas novaTarefa = new Tarefas(nome);
+        
+
+
+        /*ArrayList<Categoria> categorias = arqCategoria.getAllCategories();
+        if(categorias != null){
+            for(Categoria item : categorias){
+                System.out.println(item.getNome());
+            }
+        }*/
+        
 
         System.out.println(novaTarefa.getNome());
 
