@@ -154,7 +154,7 @@ public class Tarefas implements Registro {
         // TODO FAZER TRATAMENTO DE ACENTOS
         String fixed = new String(tmp);
         return "\nID........: " + this.id +
-                "\nName......: " + fixed +
+                "\nName......: " + fixed.trim() +
                 "\nCreated At: " + this.createdAt.toString() +
                 "\nStatus....: " + this.status +
                 (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +

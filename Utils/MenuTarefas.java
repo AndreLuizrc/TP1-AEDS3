@@ -206,12 +206,10 @@ public class MenuTarefas {
 
     public String tratarNome(String nome) {
         // Trata acentos
-        System.out.println("tratar nome: " + nome);
         String nomeLimpo = Normalizer.normalize(nome, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
-        System.out.println(nomeLimpo);
+        
         // Preenche para ficar com tamanho exato
         nomeLimpo = filler(nomeLimpo);
-        System.out.println(nomeLimpo);
 
         return nomeLimpo;
     }
