@@ -28,7 +28,7 @@ public class Tarefas implements Registro {
 
     public Tarefas(int id, String nome, LocalDate createdAt) {
         this.id = id;
-        this.nome = preencherNome(nome);
+        this.nome = nome;
         this.createdAt = LocalDate.now();
         this.doneAt = null;
         this.status = Status.PENDENTE;
@@ -38,30 +38,12 @@ public class Tarefas implements Registro {
 
     public Tarefas(String nome) {
         this.id = 0;
-        this.nome = preencherNome(nome);
+        this.nome = nome;
         this.createdAt = LocalDate.now();
         this.doneAt = null;
         this.status = Status.PENDENTE;
         this.priority = 1;
         this.idCategoria = 0;
-    }
-
-    // Preenche com espaços em branco para que o nome tenha o tamanho fixo correto
-    private String preencherNome(String nome) {
-        if (nome.length() > 20) {
-            throw new IllegalArgumentException("O nome excede o tamanho máximo permitido.");
-        }
-        char[] filler = new char[20];
-        for (int i = 0; i < nome.length(); i++) {
-            filler[i] = nome.charAt(i);
-        }
-        for (int i = nome.length(); i < filler.length; i++) {
-            filler[i] = 'a';
-        }
-        String tmp = new String(filler);
-        this.nome = tmp;
-
-        return this.nome;
     }
 
     public void setStatus(Status status) {
@@ -138,7 +120,6 @@ public class Tarefas implements Registro {
         dos.writeUTF(this.nome);
         dos.writeInt((int) this.createdAt.toEpochDay());
 
-        // Tratar o caso de doneAt ser null
         if (this.doneAt != null) {
             dos.writeBoolean(true);
             dos.writeInt((int) this.doneAt.toEpochDay());
@@ -184,10 +165,10 @@ public class Tarefas implements Registro {
                 j++;
             }
         }
-        // FAZER TRATAMENTO DE ACENTOS
+        // TODO FAZER TRATAMENTO DE ACENTOS
         String fixed = new String(tmp);
         return "\nID........: " + this.id +
-                "\nName......: " + fixed +
+                "\nName......: " + fixed.trim() +
                 "\nCreated At: " + this.createdAt.toString() +
                 "\nStatus....: " + this.status +
                 (this.status == Status.CONCLUIDO ? "\nDone at...: " + this.doneAt.toString() : "") +

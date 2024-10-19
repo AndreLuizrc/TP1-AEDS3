@@ -4,7 +4,6 @@ import Objetos.ParNomeId;
 import Objetos.Categoria;
 
 import java.io.RandomAccessFile;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
