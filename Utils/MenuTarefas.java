@@ -81,8 +81,6 @@ public class MenuTarefas {
 
         Tarefas novaTarefa = new Tarefas(nome); 
 
-        System.out.println(novaTarefa.getNome());
-
         arqTarefas.create(novaTarefa);
     }
 
@@ -309,4 +307,5 @@ public class MenuTarefas {
 
        return novaData;
     }
+    // TODO modularizar
 }

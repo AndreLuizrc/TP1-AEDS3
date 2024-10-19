@@ -108,7 +108,6 @@ public class Tarefas implements Registro {
         dos.writeUTF(this.nome);
         dos.writeInt((int) this.createdAt.toEpochDay());
 
-        // Tratar o caso de doneAt ser null
         if (this.doneAt != null) {
             dos.writeBoolean(true);
             dos.writeInt((int) this.doneAt.toEpochDay());
