@@ -50,5 +50,6 @@ public class IO {
 }
 // TODO tirar pipe do sysout
 // TODO editar incluir CATEGORIA
+
 // cls && javac IO.java && java IO
 // git clean -f
