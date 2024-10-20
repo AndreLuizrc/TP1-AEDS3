@@ -51,8 +51,14 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
     
     public boolean delete(String nome) throws Exception {
         ParNomeId pni = indiceIndiretoParNomeIdTarefas.read(ParNomeId.hash(nome));
+        Tarefas tarefa = super.read(pni.getId());
+
+        ParIdId pii = new ParIdId(tarefa.getIdCategoria(), tarefa.getId());
+        arvore.delete(pii);
+        
         if(pni != null) 
             if(delete(pni.getId())) 
+                
                 return indiceIndiretoParNomeIdTarefas.delete(ParNomeId.hash(nome));
         return false;
     }
