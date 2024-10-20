@@ -2,10 +2,14 @@ package Utils;
 
 import java.util.Scanner;
 import Arquivos.ArquivoCategoria;
+import Arquivos.ArquivoTarefa;
 import Objetos.Categoria;
+import Objetos.ParIdId;
+
 import java.text.Normalizer;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class MenuCategorias {
 
@@ -99,12 +103,18 @@ public class MenuCategorias {
         String nome = console.nextLine();
         String nomeLimpo = tratarNome(nome);
 
-        if (arqCategorias.delete(nomeLimpo)) {
-            System.out.println("Categoria excluida com sucesso!!\n");
-        } else {
-            System.out.println("Categoria nao encontrada\n");
-        }
+        ArquivoTarefa arqTarefas = new ArquivoTarefa();
 
+        ArrayList<ParIdId> pii = arqTarefas.getAllStacksFromCategorie(arqCategorias.read(nomeLimpo).getId());
+            if(pii.size() > 0){
+                System.out.println("Esta categoria nao pode ser deletada, pois ainda ha tarefas vinculadas a ela");
+            }else{
+                if (arqCategorias.delete(nomeLimpo)) {
+                    System.out.println("Categoria excluida com sucesso!!\n");
+                } else {
+                    System.out.println("Categoria nao encontrada\n");
+                }
+            }
     }
 
     public void alterarCategoria() throws Exception {
@@ -113,48 +123,56 @@ public class MenuCategorias {
 
         String nome = console.nextLine();
         String nomeLimpo = tratarNome(nome);
+        ArquivoTarefa arqTarefas = new ArquivoTarefa();
 
         Categoria obj = arqCategorias.read(nomeLimpo);
 
-        if (obj != null) {
-            System.out.println(obj);
-            System.out.println("\nQual informação gostaria de alterar?");
-            System.out.println("1 - Nome");
-            System.out.println("0 - Voltar");
-
-            int option;
-            System.out.print("Opção: ");
-            try {
-                option = Integer.valueOf(console.nextLine());
-            } catch (NumberFormatException e) {
-                option = -1;
-            }
-
-            switch (option) {
-                case 1:
-                    System.out.println("Digite o novo nome da Categoria");
-
-                    String nomeNovo = console.nextLine();
-                    nomeNovo = tratarNome(nomeNovo);
-
-                    obj.setNome(nomeNovo);
-                    if (arqCategorias.update(obj, nomeLimpo)) {
-                        System.out.println("Atualizacao realizada com sucesso");
-                    } else {
-                        System.out.println("ERRO");
+        ArrayList<ParIdId> pii = arqTarefas.getAllStacksFromCategorie(arqCategorias.read(nomeLimpo).getId());
+            if(pii.size() > 0){
+                System.out.println("Esta categoria nao pode ser alterada, pois ainda ha tarefas vinculadas a ela");
+            }else{
+                if (obj != null) {
+                    System.out.println(obj);
+                    System.out.println("\nQual informação gostaria de alterar?");
+                    System.out.println("1 - Nome");
+                    System.out.println("0 - Voltar");
+        
+                    int option;
+                    System.out.print("Opção: ");
+                    try {
+                        option = Integer.valueOf(console.nextLine());
+                    } catch (NumberFormatException e) {
+                        option = -1;
                     }
-                    break;
-                case 2:
-                    System.out.println("Atualizacao cancelada");
-                    break;
-                default:
-                    System.out.println("Atualizacao cancelada");
-                    break;
+        
+                    switch (option) {
+                        case 1:
+                            System.out.println("Digite o novo nome da Categoria");
+        
+                            String nomeNovo = console.nextLine();
+                            nomeNovo = tratarNome(nomeNovo);
+        
+                            obj.setNome(nomeNovo);
+                            if (arqCategorias.update(obj, nomeLimpo)) {
+                                System.out.println("Atualizacao realizada com sucesso");
+                            } else {
+                                System.out.println("ERRO");
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Atualizacao cancelada");
+                            break;
+                        default:
+                            System.out.println("Atualizacao cancelada");
+                            break;
+                    }
+                } else {
+                    System.out.println("Categoria nao encontrada");
+                }
+        
             }
-        } else {
-            System.out.println("Categoria nao encontrada");
-        }
 
+        
     }
 
     public String tratarNome(String nome) {
@@ -195,4 +213,6 @@ public class MenuCategorias {
         String fixed = new String(tmp);
         return fixed;
     }
+
+
 }

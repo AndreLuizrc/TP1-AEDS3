@@ -48,7 +48,7 @@ public class IO {
         }
     }
 }
-// TODO não permitir exclusao e alteracao de tarefas com categoria
+
 // TODO deletar indice indireto quando excluir uma tarefa
 
 // cls && javac IO.java && java IO
