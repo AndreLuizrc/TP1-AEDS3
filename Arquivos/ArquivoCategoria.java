@@ -90,8 +90,8 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
 
 
                 if(tomb == ' '){
-                        obj.fromByteArray(b);
-                        lista.add(obj);
+                    obj.fromByteArray(b);
+                    lista.add(obj);
                 }
             }
         }

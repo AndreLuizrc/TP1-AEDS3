@@ -158,8 +158,6 @@ public class Tarefas implements Registro {
 
     @Override
     public String toString(){
-
-
         try {
             return "\nID........: " + this.id +
                     "\nName......: " + unfiller(this.nome) +

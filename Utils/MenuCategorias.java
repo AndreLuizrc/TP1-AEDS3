@@ -79,6 +79,8 @@ public class MenuCategorias {
 
     public void incluirCategoria() throws Exception {
 
+        //TODO incluir mensagens de feedback
+
         System.out.println("\nInclusão de categoria: ");
         System.out.println("\nDigite o nome da categoria que deseja incluir: ");
 
