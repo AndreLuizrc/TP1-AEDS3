@@ -5,9 +5,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import Interfaces.RegistroHashExtensivel;
 
-public class ParIdId implements RegistroHashExtensivel<ParIdId> {
+import Interfaces.RegistroArvoreBMais;
+
+
+public class ParIdId implements RegistroArvoreBMais<ParIdId> {
     private int id1; // chave
     private int id2;     // valor
     private final short TAMANHO = 8;  // tamanho em bytes
@@ -18,8 +20,12 @@ public class ParIdId implements RegistroHashExtensivel<ParIdId> {
     }
 
     public ParIdId(int id1, int id2) throws Exception {
-        this.id1 = id1;
-        this.id2 = id2;
+        try {
+            this.id1 = id1; 
+            this.id2 = id2; 
+          } catch (Exception ec) {
+            ec.printStackTrace();
+          }
     }
 
     public int getId1() {
@@ -30,14 +36,31 @@ public class ParIdId implements RegistroHashExtensivel<ParIdId> {
         return this.id2;
     }
 
- 
     @Override
-    public int hashCode() {
-        return this.id1;
+    public ParIdId clone() {
+        try {
+            return new ParIdId(this.id1, this.id2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public short size(){
         return this.TAMANHO;
+    }
+
+    public int compareTo(ParIdId a) {
+        if (this.id1 != a.id1)
+          return this.id1 - a.id1;
+        else
+          // Só compara os valores de id2, se o id2 da busca for diferente de -1
+          // Isso é necessário para que seja possível a busca de lista
+          return this.id2 == -1 ? 0 : this.id2 - a.id2;
+      }
+
+    public String toString() {
+        return String.format("%3d", this.id1) + ";" + String.format("%-3d", this.id2);
     }
 
     public byte[] toByteArray() throws IOException{

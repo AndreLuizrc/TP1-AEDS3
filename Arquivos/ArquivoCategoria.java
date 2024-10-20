@@ -3,6 +3,7 @@ package Arquivos;
 import Objetos.ParNomeId;
 import Objetos.Categoria;
 
+
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
@@ -11,8 +12,11 @@ public class ArquivoCategoria extends Arquivos.Arquivo<Categoria> {
     Arquivo<Categoria> arqCategoria;
     HashExtensivel<ParNomeId> indiceIndiretoParNomeIdCategoria;
 
+
+
     public ArquivoCategoria() throws Exception {
         super("categorias", Categoria.class.getConstructor());
+
         indiceIndiretoParNomeIdCategoria = new HashExtensivel<>(
             ParNomeId.class.getConstructor(), 
             4, 

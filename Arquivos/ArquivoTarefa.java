@@ -1,5 +1,10 @@
 package Arquivos;
 
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+
+import Objetos.Categoria;
+import Objetos.ParIdId;
 import Objetos.ParNomeId;
 import Objetos.Tarefas;
 
@@ -7,9 +12,15 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
 
     Arquivo<Tarefas> arqTarefas;
     HashExtensivel<ParNomeId> indiceIndiretoParNomeIdTarefas;
+    ArvoreBMais<ParIdId> arvore;
 
     public ArquivoTarefa() throws Exception {
         super("tarefas", Tarefas.class.getConstructor());
+
+        arvore = new ArvoreBMais<>(
+            ParIdId.class.getConstructor(), 5, 
+            "dados/arvore.db");
+
         indiceIndiretoParNomeIdTarefas = new HashExtensivel<>(
             ParNomeId.class.getConstructor(), 
             4, 
@@ -22,6 +33,9 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
     public int create(Tarefas c) throws Exception {
         int id = super.create(c);
         indiceIndiretoParNomeIdTarefas.create(new ParNomeId(c.getNome(), id));
+        if(arvore.create(new ParIdId(c.getIdCategoria(), c.getId()))){
+            System.out.println("inserido");
+        }
 
         return id;
     }
@@ -56,6 +70,31 @@ public class ArquivoTarefa extends Arquivos.Arquivo<Tarefas> {
             return true;
         }
         return false;
+    }
+
+    public boolean update(Tarefas novaTarefa, String nome, int idVelho) throws Exception {
+        Tarefas tarefaVelha = read(idVelho);
+        if(super.update(novaTarefa)) {
+                indiceIndiretoParNomeIdTarefas.delete(ParNomeId.hash(tarefaVelha.getNome()));
+                indiceIndiretoParNomeIdTarefas.create(new ParNomeId(novaTarefa.getNome(), novaTarefa.getId()));
+                ParIdId piiVelho = new ParIdId(tarefaVelha.getIdCategoria(), tarefaVelha.getId());
+                ParIdId pii = new ParIdId(novaTarefa.getIdCategoria(), novaTarefa.getId());
+                arvore.delete(piiVelho);
+                arvore.create(pii);
+
+            return true;
+        }
+        return false;
+    }
+
+    
+
+    public ArrayList<ParIdId> getAllStacksFromCategorie(int id1)throws Exception{
+        ArrayList<ParIdId> lista = new ArrayList<>();
+        ParIdId pii = new ParIdId(id1, -1);
+        lista = arvore.read(pii);
+        
+        return lista;
     }
 }
 

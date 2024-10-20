@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Arquivos.ArquivoTarefa;
 import Objetos.Categoria;
+import Objetos.ParIdId;
 import Objetos.Tarefas;
 import java.time.LocalDate;
 import java.text.Normalizer;
@@ -33,6 +34,7 @@ public class MenuTarefas {
             System.out.println("2 - Incluir");
             System.out.println("3 - Alterar");
             System.out.println("4 - Excluir");
+            System.out.println("5 - Listar tarefas de categoria");
             System.out.println("0 - Voltar");
 
             System.out.print("Opção: ");
@@ -54,6 +56,9 @@ public class MenuTarefas {
                     break;
                 case 4:
                     excluirTarefa();
+                    break;
+                case 5:
+                    listarTarefasDeCategoria();
                     break;
                 case 0:
                     break;
@@ -98,7 +103,9 @@ public class MenuTarefas {
             System.out.println("Tarefa incluída com sucesso!!\n");
         }else{
             System.out.println("ERRO");
-        }        
+        }
+        
+        
     }
 
     public void excluirTarefa() throws Exception {
@@ -210,8 +217,9 @@ public class MenuTarefas {
                     System.out.println("Escolha a nova categoria");
                     int novaCategoria = getCategoria();
                     if(novaCategoria != 0){
+                        int idVelho = obj.getId();
                         obj.setIdCategoria(novaCategoria);
-                        arqTarefas.update(obj, nomeLimpo);
+                        arqTarefas.update(obj, nomeLimpo, idVelho);
                     }else{
                         System.out.println("ERRO");
                     }
@@ -222,6 +230,25 @@ public class MenuTarefas {
             }
         } else {
             System.out.println("Categoria nao encontrada");
+        }
+    }
+
+    public void listarTarefasDeCategoria()throws Exception{
+        System.out.println("Escolha uma categoria: ");
+        int idCategoria = getCategoria();
+
+        if(idCategoria != 0){
+            ArrayList<ParIdId> pii = arqTarefas.getAllStacksFromCategorie(idCategoria);
+            if(pii.size() > 0){
+                for(ParIdId item : pii){
+                    Tarefas tarefa = arqTarefas.read(item.getId2());
+                    System.out.println(tarefa);
+                }
+            }else{
+                System.out.println("nao ha tarefas com essa categoria");
+            }
+        }else{
+            System.out.println("Tarefa nao encontrada");
         }
     }
 
