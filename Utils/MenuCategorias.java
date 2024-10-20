@@ -79,19 +79,16 @@ public class MenuCategorias {
 
     public void incluirCategoria() throws Exception {
 
-        //TODO incluir mensagens de feedback
-
         System.out.println("\nInclusão de categoria: ");
         System.out.println("\nDigite o nome da categoria que deseja incluir: ");
 
         String nome = console.nextLine();
         String nomeLimpo = tratarNome(nome);
 
-        Categoria novaCategoria = new Categoria(nomeLimpo);
-
-        System.out.println(novaCategoria.getNome());
+        Categoria novaCategoria = new Categoria(nomeLimpo);        
 
         arqCategorias.create(novaCategoria);
+        System.out.println("Categoria criada com sucesso!!\n");
     }
 
     public void excluirCategoria() throws Exception {

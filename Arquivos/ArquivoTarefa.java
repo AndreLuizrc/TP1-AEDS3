@@ -1,9 +1,7 @@
 package Arquivos;
 
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
-import Objetos.Categoria;
 import Objetos.ParIdId;
 import Objetos.ParNomeId;
 import Objetos.Tarefas;

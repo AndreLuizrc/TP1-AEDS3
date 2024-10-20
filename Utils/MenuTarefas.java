@@ -225,11 +225,11 @@ public class MenuTarefas {
                     }
                     break;
                 default:
-                    System.out.println("Atualizacao cancelada");
+                    System.out.println("Atualizacao cancelada!");
                     break;
             }
         } else {
-            System.out.println("Categoria nao encontrada");
+            System.out.println("Categoria nao encontrada!");
         }
     }
 
@@ -241,14 +241,14 @@ public class MenuTarefas {
             ArrayList<ParIdId> pii = arqTarefas.getAllStacksFromCategorie(idCategoria);
             if(pii.size() > 0){
                 for(ParIdId item : pii){
-                    Tarefas tarefa = arqTarefas.read(item.getId2());
+                    Tarefas tarefa = arqTarefas.read(item.getId2());                    
                     System.out.println(tarefa);
                 }
             }else{
-                System.out.println("nao ha tarefas com essa categoria");
+                System.out.println("Nao existem tarefas com essa categoria!");
             }
         }else{
-            System.out.println("Tarefa nao encontrada");
+            System.out.println("Categoria invalida!");
         }
     }
 
@@ -300,7 +300,7 @@ public class MenuTarefas {
             do{
                 int i = 1;
                 for(Categoria item : categorias){
-                    System.out.println("-" + i + " " + unfiller(item.getNome()));
+                    System.out.println(i + "- " + unfiller(item.getNome()));
                     i++;
                 }
                 System.out.println("opcao:");
